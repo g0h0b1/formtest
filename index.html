@@ -59,8 +59,16 @@
   .success-msg {
     display: none;
     text-align: center;
+    padding: 20px 0;
+  }
+  .success-msg h2 {
     color: #1a7f37;
-    font-weight: 600;
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+  .success-msg p {
+    color: #555;
+    font-size: 14px;
   }
 </style>
 </head>
@@ -80,7 +88,10 @@
 
   <button type="submit" id="submitBtn">Submit</button>
 
-  <p class="success-msg" id="successMsg">Thanks! Your response was recorded.</p>
+  <div class="success-msg" id="successMsg">
+    <h2>Thank you!</h2>
+    <p>Your response has been recorded successfully.</p>
+  </div>
 </form>
 
 <script>
