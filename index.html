@@ -398,22 +398,30 @@
         }
 
         // Initialize Data
-        function loadData() {
-            const stored = localStorage.getItem('it_plan_activities_sec_v3');
-            if (stored) {
-                try {
-                    activities = JSON.parse(stored);
-                } catch(e) {
-                    activities = [...defaultActivities];
-                }
-            } else {
-                activities = [...defaultActivities];
-                saveData();
+        
+           const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwcA3qQXhs-isEd8DFJ_8_PgxIXeQLPxCCPVyCxc6pvySCNcdVRAFM4ggwMMZG9lX1Q/exec";
+
+async function loadData() {
+    activities = [...defaultActivities];
+
+    try {
+        const res = await fetch(SCRIPT_URL);
+        const bookedIds = await res.json();
+
+        activities.forEach(act => {
+            if (bookedIds.includes(act.id) || bookedIds.includes(String(act.id))) {
+                act.isBooked = true;
             }
-            renderSelectOptions();
-            renderDirectoryTable();
-            checkSessionState();
-        }
+        });
+    } catch (err) {
+        console.error("Failed to load booked status:", err);
+    }
+
+    renderSelectOptions();
+    renderDirectoryTable();
+    checkSessionState();
+}
+        
 
         function saveData() {
             localStorage.setItem('it_plan_activities_sec_v3', JSON.stringify(activities));
@@ -502,7 +510,8 @@ if (index !== -1) {
         dept: teacherDept,
         date: eventDate,
         teacher: teacherName,
-        coTeacher: coTeacherName
+        coTeacher: coTeacherName,
+        id: activities[index].id
     })
 }).catch(err => console.error("Sheet sync failed:", err));
 
