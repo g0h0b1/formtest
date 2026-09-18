@@ -399,28 +399,102 @@
 
         // Initialize Data
         
-           const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwcA3qQXhs-isEd8DFJ_8_PgxIXeQLPxCCPVyCxc6pvySCNcdVRAFM4ggwMMZG9lX1Q/exec";
-
-async function loadData() {
-    activities = [...defaultActivities];
-
-    try {
-        const res = await fetch(SCRIPT_URL);
-        const bookedIds = await res.json();
-
-        activities.forEach(act => {
-            if (bookedIds.includes(act.id) || bookedIds.includes(String(act.id))) {
-                act.isBooked = true;
-            }
-        });
-    } catch (err) {
-        console.error("Failed to load booked status:", err);
-    }
-
-    renderSelectOptions();
-    renderDirectoryTable();
-    checkSessionState();
+         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwcA3qQXhs-isEd8DFJ_8_PgxIXeQLPxCCPVyCxc6pvySCNcdVRAFM4ggwMMZG9lX1Q/exec";
+// 1. جلب البيانات من السيرفر 
+        async function loadData() { try { const res = await fetch(SCRIPT_URL, { cache: "no-store" }); const bookedIds = await res.json();
+    // إعادة ضبط الحالات بناءً على السيرفر
+    activities.forEach(act => {
+        if (bookedIds.includes(act.id) || bookedIds.includes(String(act.id)) || bookedIds.includes(Number(act.id))) {
+            act.isBooked = true;
+        }
+    });
+} catch (err) {
+    console.error("فشل جلب الحجوزات من السيرفر:", err);
 }
+
+renderSelectOptions();
+renderDirectoryTable();
+checkSessionState();
+}
+// 2. معالجة الحجز مع التحقق الفوري ومنع التكرار والبطء 
+        async function handleBooking(e) { e.preventDefault();
+const submitBtn = e.target.querySelector('button[type="submit"]');
+const teacherName = escapeHTML(document.getElementById('teacherName').value.trim());
+const teacherDept = escapeHTML(document.getElementById('teacherDept').value.trim());
+const activityId = document.getElementById('activitySelect').value;
+const eventDate = document.getElementById('eventDate').value;
+const hasCo = document.querySelector('input[name="hasCoTeacher"]:checked').value === 'yes';
+const coTeacherName = hasCo ? escapeHTML(document.getElementById('coTeacherName').value.trim()) : '';
+
+if (!teacherNameerName').value.trim!eventDate) {
+    alert("يرجى ملء كافة الحقول الإلزامية!");
+    return;
+}
+
+const index = activities.findIndex(a => a.id == activityId);
+if (index === -1) return;
+
+// تعطيل الزر وإظهار مؤشر التحميل فوراً لمنع الضغط المزدوج وتحسين استجابة السرعة
+submitBtn.disabled = true;
+const originalBtnText = submitBtn.innerHTML;
+submitBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> جاري التأكد من السيرفر والحفظ...';
+
+try {
+    const response = await fetch(SCRIPT_URL, {
+        method: "POST",
+        body: JSON.stringify({
+            title: activities[index].title,
+            type: activities[index].type,
+            dept: teacherDept,
+            date: eventDate,
+            teacher: teacherName,
+            coTeacher: coTeacherName,
+            id: activities[index].id
+        })
+    });
+
+    const result = await response.json();
+
+    if (result.status === "already_booked") {
+        // إذا سبق وأن حجزه تدريسي آخر قبل لحظات
+        alert("⚠️ " + result.message);
+        await loadData(); // إعادة تحديث القائمة فوراً لإخفاء هذا النشاط
+    } else if (result.status === "success") {
+        // نجاح الحجز
+        activities[index].isBooked = true;
+        activities[index].teacher = teacherName;
+        activities[index].coTeacher = coTeacherName;
+        activities[index].date = eventDate;
+
+        saveData();
+        alert(`✅ تم تأكيد الحجز بنجاح!\nالعنوان: ${activities[index].title}\nالتاريخ: ${eventDate}`);
+
+        document.getElementById('bookingForm').reset();
+        document.getElementById('activityDetailsCard').classList.add('hidden');
+        toggleCoTeacherInput();
+
+        renderSelectOptions();
+        renderDirectoryTable();
+        if (sessionStorage.getItem('admin_session') === 'active') {
+            renderAdminTable();
+        }
+    } else {
+        alert("حدث خطأ أثناء الحفظ: " + (result.message || "يرجى المحاولة لاحقاً"));
+    }
+} catch (err) {
+    console.error("Sheet sync failed:", err);
+    alert("تعذر الاتصال بالسيرفر! يرجى التأكد من جودة الإنترنت وإعادة المحاولة.");
+} finally {
+    // إعادة الزر لحالته الطبيعية
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = originalBtnText;
+}
+}
+// 3. إضافة المزامنة التلقائية الخلفية كل 12 ثانية لتحديث الخيارات دون إزعاج المستخدم 
+        document.addEventListener('DOMContentLoaded', () => { loadData(); 
+                                                             // تحديث البيانات تلقائياً في الخلفية كل 12 ثانية 
+                                                             setInterval(loadData, 12000); });
+
         
 
         function saveData() {
@@ -477,57 +551,7 @@ async function loadData() {
         }
 
         // Handle Public Booking Submission
-        function handleBooking(e) {
-            e.preventDefault();
-
-            const teacherName = escapeHTML(document.getElementById('teacherName').value.trim());
-            const teacherDept = escapeHTML(document.getElementById('teacherDept').value.trim());
-            const activityId = document.getElementById('activitySelect').value;
-            const eventDate = document.getElementById('eventDate').value;
-            const hasCo = document.querySelector('input[name="hasCoTeacher"]:checked').value === 'yes';
-            const coTeacherName = hasCo ? escapeHTML(document.getElementById('coTeacherName').value.trim()) : '';
-
-            if (!teacherName || !activityId || !eventDate) {
-                alert("يرجى ملء كافة الحقول الإلزامية!");
-                return;
-            }
-
-            const index = activities.findIndex(a => a.id == activityId);
-if (index !== -1) {
-    activities[index].isBooked = true;
-    activities[index].teacher = teacherName;
-    activities[index].coTeacher = coTeacherName;
-    activities[index].date = eventDate;
-
-    saveData();
-
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwcA3qQXhs-isEd8DFJ_8_PgxIXeQLPxCCPVyCxc6pvySCNcdVRAFM4ggwMMZG9lX1Q/exec";
-    fetch(SCRIPT_URL, {
-    method: "POST",
-    body: JSON.stringify({
-        title: activities[index].title,
-        type: activities[index].type,
-        dept: teacherDept,
-        date: eventDate,
-        teacher: teacherName,
-        coTeacher: coTeacherName,
-        id: activities[index].id
-    })
-}).catch(err => console.error("Sheet sync failed:", err));
-
-    alert(`تم تأكيد الحجز بنجاح!\nالعنوان: ${activities[index].title}\nالتاريخ: ${eventDate}`);
-
-                document.getElementById('bookingForm').reset();
-                document.getElementById('activityDetailsCard').classList.add('hidden');
-                toggleCoTeacherInput();
-
-                renderSelectOptions();
-                renderDirectoryTable();
-                if (sessionStorage.getItem('admin_session') === 'active') {
-                    renderAdminTable();
-                }
-            }
-        }
+      
 
         // Render Directory Table with Sanitized Outputs
         function renderDirectoryTable() {
