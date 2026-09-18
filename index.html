@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdnjs.cloudflare.com https://fonts.googleapis.com https://fonts.gstatic.com; img-src 'self' data:;">
-    <title>استمارة الخطة السنوية (2026-2027) - كلية تكنولوجيا المعلومات</title>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdnjs.cloudflare.com https://fonts.googleapis.com https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com;">    <title>استمارة الخطة السنوية (2026-2027) - كلية تكنولوجيا المعلومات</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
@@ -62,7 +61,7 @@
                     <label class="block text-slate-700 font-bold mb-2 text-sm md:text-base">
                         <i class="fa-solid fa-user text-indigo-600 ml-1"></i> القسم  <span class="text-red-500">*</span>
                     </label>
-                    <input type="text" id="teacherName" required placeholder="أدخل القسم" autocomplete="off"
+                    <input type="text" id="teacherDept" required placeholder="أدخل القسم" autocomplete="off"
                            class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-slate-50 transition">
                 </div>
 
@@ -474,6 +473,7 @@
             e.preventDefault();
 
             const teacherName = escapeHTML(document.getElementById('teacherName').value.trim());
+            const teacherDept = escapeHTML(document.getElementById('teacherDept').value.trim());
             const activityId = document.getElementById('activitySelect').value;
             const eventDate = document.getElementById('eventDate').value;
             const hasCo = document.querySelector('input[name="hasCoTeacher"]:checked').value === 'yes';
@@ -495,16 +495,16 @@ if (index !== -1) {
 
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwcA3qQXhs-isEd8DFJ_8_PgxIXeQLPxCCPVyCxc6pvySCNcdVRAFM4ggwMMZG9lX1Q/exec";
     fetch(SCRIPT_URL, {
-        method: "POST",
-        body: JSON.stringify({
-            title: activities[index].title,
-            type: activities[index].type,
-            dept: activities[index].dept,
-            date: eventDate,
-            teacher: teacherName,
-            coTeacher: coTeacherName
-        })
-    }).catch(err => console.error("Sheet sync failed:", err));
+    method: "POST",
+    body: JSON.stringify({
+        title: activities[index].title,
+        type: activities[index].type,
+        dept: teacherDept,
+        date: eventDate,
+        teacher: teacherName,
+        coTeacher: coTeacherName
+    })
+}).catch(err => console.error("Sheet sync failed:", err));
 
     alert(`تم تأكيد الحجز بنجاح!\nالعنوان: ${activities[index].title}\nالتاريخ: ${eventDate}`);
 
