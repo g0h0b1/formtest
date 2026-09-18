@@ -66,7 +66,7 @@
 </head>
 <body>
 
-<form id="myForm" action="https://script.google.com/macros/s/AKfycbz8jb184KAAQZCBCmuPcw8VyQep0TmRtYA_MliJyAjswegp5Cqp0saKlRG3Zc4gg9r_Zw/exec" method="POST">
+<form id="myForm">
   <h1>Feedback Form</h1>
 
   <label for="name">Name</label>
@@ -78,10 +78,44 @@
   <label for="message">Message</label>
   <textarea id="message" name="message" required></textarea>
 
-  <button type="submit">Submit</button>
+  <button type="submit" id="submitBtn">Submit</button>
 
   <p class="success-msg" id="successMsg">Thanks! Your response was recorded.</p>
 </form>
+
+<script>
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz8jb184KAAQZCBCmuPcw8VyQep0TmRtYA_MliJyAjswegp5Cqp0saKlRG3Zc4gg9r_Zw/exec";
+
+  const form = document.getElementById("myForm");
+  const btn = document.getElementById("submitBtn");
+  const successMsg = document.getElementById("successMsg");
+
+  form.addEventListener("submit", function(e) {
+    e.preventDefault();
+    btn.disabled = true;
+    btn.textContent = "Submitting...";
+
+    const data = {
+      name: document.getElementById("name").value,
+      email: document.getElementById("email").value,
+      message: document.getElementById("message").value
+    };
+
+    fetch(SCRIPT_URL, {
+      method: "POST",
+      body: JSON.stringify(data)
+    })
+    .then(() => {
+      form.style.display = "none";
+      successMsg.style.display = "block";
+    })
+    .catch(() => {
+      btn.disabled = false;
+      btn.textContent = "Submit";
+      alert("Something went wrong. Please try again.");
+    });
+  });
+</script>
 
 </body>
 </html>
