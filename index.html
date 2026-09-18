@@ -58,6 +58,13 @@
                     <input type="text" id="teacherName" required placeholder="أدخل اسمك الثلاثي واللقب العلمي" autocomplete="off"
                            class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-slate-50 transition">
                 </div>
+                 <div>
+                    <label class="block text-slate-700 font-bold mb-2 text-sm md:text-base">
+                        <i class="fa-solid fa-user text-indigo-600 ml-1"></i> القسم  <span class="text-red-500">*</span>
+                    </label>
+                    <input type="text" id="teacherName" required placeholder="أدخل القسم" autocomplete="off"
+                           class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-slate-50 transition">
+                </div>
 
                 <!-- Select Activity -->
                 <div>
@@ -84,7 +91,7 @@
                     <label class="block text-slate-700 font-bold mb-2 text-sm md:text-base">
                         <i class="fa-solid fa-calendar-days text-indigo-600 ml-1"></i> تاريخ انعقاد النشاط <span class="text-red-500">*</span>
                     </label>
-                    <input type="date" id="eventDate" required
+                    <input type="date" id="eventDate" required 
                            class="w-full md:w-1/2 px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-slate-50 transition">
                 </div>
 
@@ -294,76 +301,75 @@
     <script>
         // Default initial 70 topics list
         const defaultActivities = [
-            { id: 1, title: "تشكيل لجنة اعضاء ارتباط بوحدة الارشاد النفسي الجامعي", type: "تشكيل لجنة", dept: "كلية تكنولوجيا المعلومات", date: "2026-09-01", target: "الأقسام العلمية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 2, title: "الأمن السيبراني والحماية من التصيد الإلكتروني", type: "ورشة", dept: "قسم الامن السيبراني", date: "2026-09-12", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 3, title: "المسؤولية القانونية والمجتمعية لطلبة الجامعة في مكافحة ترويج السموم والمؤثرات العقلية والعنف المنزلي", type: "ورشة عمل", dept: "الوحدة القانونية", date: "2026-09-17", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 4, title: "تحليل أثر شبكات التواصل الاجتماعي على الصحة النفسية", type: "ندوة", dept: "قسم الشبكات", date: "2026-09-19", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 5, title: "الذكاء الاصطناعي في خدمة الإرشاد النفسي الجامعي", type: "ندوة", dept: "قسم البرامجيات", date: "2026-09-21", target: "الطلبة و منسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 6, title: "تطبيقات الهواتف الذكية لتعزيز التفاعل الجامعي", type: "ورشة عمل", dept: "قسم البرامجيات", date: "2026-10-01", target: "منسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 7, title: "التشجيع على نشر البحوث الرصينة في المجلات المحلية والعالمية", type: "دورة تدريبية", dept: "قسم الشبكات", date: "2026-10-01", target: "الطلبة وباحثين واساتذة", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 8, title: "تحليل البيانات لتعزيز جودة التعليم", type: "ورشة عمل", dept: "قسم البرامجيات", date: "2026-10-05", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 9, title: "مهارات التدخل المبكر والدعم النفسي لضحايا التفكك الأسري والانجراف نحو التدخين والمخدرات", type: "دورة تدريبية", dept: "قسم البرامجيات", date: "2026-10-08", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 10, title: "التنمر الإلكتروني وسبل الحد منه باستخدام تقنية المعلومات", type: "ندوة", dept: "قسم الشبكات", date: "2026-10-12", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 11, title: "الروابط النفسية والاجتماعية بين تعاطي المخدرات، تفاقم العنف الأسري، والأفكار الانتحارية لدى الشباب وكيفية معالجتها", type: "ندوة علمية", dept: "قسم الشبكات", date: "2026-10-15", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 12, title: "الصحة النفسية الرقمية وتأثير مواقع التواصل الاجتماعي على الطلبة", type: "ندوة", dept: "قسم الامن السيبراني", date: "2026-10-17", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 13, title: "التحقق من الأخبار المزيفة عبر الإنترنت", type: "ورشة عمل", dept: "قسم الامن السيبراني", date: "2026-10-19", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 14, title: "استراتيجيات الإرشاد الجامعي المتقدم في معالجة التلازم السلوكي بين الإدمان الرقمي والنزاعات الأسرية", type: "دورة تدريبية", dept: "وحدة الإرشاد النفسي والتوجيه التربوي", date: "2026-10-25", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 15, title: "مكافحة التدخين والمخدرات عن طريق التكنولوجيا الحديثة", type: "ورشة عمل", dept: "قسم الشبكات", date: "2026-10-26", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 16, title: "البيانات الضخمة في التعليم الجامعي", type: "ندوة", dept: "قسم البرامجيات", date: "2026-11-02", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 17, title: "التقنيات الرقمية والإعلام المضاد في رصد والحد من ظواهر الابتزاز الإلكتروني، المخدرات، والعنف الأسري", type: "ورشة عمل", dept: "قسم الأمن السيبراني", date: "2026-11-05", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 18, title: "تنظيم الجدول الدراسي و التغلب على المماطلة الاكاديمية", type: "ورشة عمل", dept: "قسم البرامجيات", date: "2026-11-08", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 19, title: "التحكم بالهوية الرقمية الشخصية", type: "ندوة", dept: "قسم الامن السيبراني", date: "2026-11-12", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 20, title: "التعليم الافتراضي وتأثيره على العلاقات الأكاديمية", type: "ندوة", dept: "قسم البرامجيات", date: "2026-11-16", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 21, title: "بناء الوعي الطلابي والتحصين الفكري كدرع واقٍ ضد آفتي التدخين والمخدرات ومظاهر العنف المنزلي", type: "دورة تدريبية", dept: "قسم الشبكات", date: "2026-11-19", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 22, title: "الاستخدام الآمن لمواقع التواصل الاجتماعي", type: "بوستر الكتروني", dept: "قسم الامن السيبراني", date: "2026-11-21", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 23, title: "أمان كلمات المرور والبريد الجامعي", type: "دورة تدريبية", dept: "قسم الشبكات", date: "2026-11-23", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 24, title: "البصمة الرقمية المهنية وكيفية بنائها", type: "دورة تدريبية", dept: "قسم البرامجيات", date: "2026-12-03", target: "الطلبة و منسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 25, title: "الأمن الرقمي للوثائق والسجلات الأكاديمية", type: "دورة تدريبية", dept: "قسم الامن السيبراني", date: "2026-12-07", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 26, title: "تطبيقات الذكاء الاصطناعي في تطوير المناهج", type: "دورة تدريبية", dept: "قسم الامن السيبراني", date: "2026-12-14", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 27, title: "أثر الاستقرار الأسري والنفسي في حماية طلبة الجامعات من شبكات ترويج المخدرات والابتزاز الرقمي", type: "ندوة موسعة", dept: "قسم البرامجيات", date: "2026-12-15", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 28, title: "آليات كشف والاحتيال المالي والتصيد الإلكتروني", type: "ورشة عمل", dept: "المعاون الاداري", date: "2026-12-17", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 29, title: "تعليمات انظباط الطلبة ودورها في الالتزام والاحترام", type: "ندوة", dept: "الوحدة القانونية", date: "2026-12-17", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 30, title: "استخدام التكنولوجيا لتبسيط الإجراءات الإدارية", type: "ورشة عمل", dept: "المعاون الاداري", date: "2026-12-21", target: "منسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 31, title: "الأمن المجتمعي المستدام: معاً لبيئة جامعية خالية من التدخين ومجتمع خالٍ من العنف الأسري والمخدرات", type: "حملة توعوية", dept: "كلية تكنولوجيا المعلومات", date: "2026-12-22", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 32, title: "تأثير الادمان على الوسط الاكاديمي والمجتمعي", type: "ندوة", dept: "قسم الامن السيبراني", date: "2026-12-24", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 33, title: "الأمن الرقمي والسلامة النفسية في البيئة الجامعية", type: "حملة توعوية", dept: "قسم الامن السيبراني", date: "2026-12-24", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 34, title: "إدارة الوقت بفاعلية أمام الشاشات", type: "ندوة", dept: "قسم الامن السيبراني", date: "2026-12-28", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 35, title: "حقوق الملكية الفكرية في المشاريع والبحوث الطلابية", type: "ندوة", dept: "الاقسام العلمية", date: "2027-01-04", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 36, title: "دور تكنولوجيا المعلومات في تعزيز الاستقرار والتنمية المستدامة", type: "ندوة", dept: "قسم الشبكات", date: "2027-01-07", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 37, title: "مخاطر الهندسة الاجتماعية (Social Engineering) وتأثيرها الأمني", type: "ندوة", dept: "قسم الامن السيبراني", date: "2027-01-11", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 38, title: "آليات الكشف الفوري والتعامل النفسي والأكاديمي مع الطلبة المعرضين لمخاطر العنف المنزلي والإدمان", type: "دورة تدريبية", dept: "وحدة الإرشاد النفسي", date: "2027-01-12", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 39, title: "دور القانون والتشريعات العراقية النافذة في مكافحة الاتجار بالمخدرات والحد من الجرائم الأسرية", type: "ورشة عمل مشتركة", dept: "الوحدة القانونية", date: "2027-01-14", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 2, title: "الأمن السيبراني والحماية من التصيد الإلكتروني", type: "ورشة",  date: "2026-09-12", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 3, title: "المسؤولية القانونية والمجتمعية لطلبة الجامعة في مكافحة ترويج السموم والمؤثرات العقلية والعنف المنزلي", type: "ورشة عمل",  date: "2026-09-17", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 4, title: "تحليل أثر شبكات التواصل الاجتماعي على الصحة النفسية", type: "ندوة", date: "2026-09-19", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 5, title: "الذكاء الاصطناعي في خدمة الإرشاد النفسي الجامعي", type: "ندوة",  date: "2026-09-21", target: "الطلبة و منسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 6, title: "تطبيقات الهواتف الذكية لتعزيز التفاعل الجامعي", type: "ورشة عمل",  date: "2026-10-01", target: "منسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 7, title: "التشجيع على نشر البحوث الرصينة في المجلات المحلية والعالمية", type: "دورة تدريبية", date: "2026-10-01", target: "الطلبة وباحثين واساتذة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 8, title: "تحليل البيانات لتعزيز جودة التعليم", type: "ورشة عمل",  date: "2026-10-05", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 9, title: "مهارات التدخل المبكر والدعم النفسي لضحايا التفكك الأسري والانجراف نحو التدخين والمخدرات", type: "دورة تدريبية",  date: "2026-10-08", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 10, title: "التنمر الإلكتروني وسبل الحد منه باستخدام تقنية المعلومات", type: "ندوة", date: "2026-10-12", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 11, title: "الروابط النفسية والاجتماعية بين تعاطي المخدرات، تفاقم العنف الأسري، والأفكار الانتحارية لدى الشباب وكيفية معالجتها", type: "ندوة علمية",  date: "2026-10-15", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 12, title: "الصحة النفسية الرقمية وتأثير مواقع التواصل الاجتماعي على الطلبة", type: "ندوة", date: "2026-10-17", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 13, title: "التحقق من الأخبار المزيفة عبر الإنترنت", type: "ورشة عمل",  date: "2026-10-19", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 14, title: "استراتيجيات الإرشاد الجامعي المتقدم في معالجة التلازم السلوكي بين الإدمان الرقمي والنزاعات الأسرية", type: "دورة تدريبية",  date: "2026-10-25", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 15, title: "مكافحة التدخين والمخدرات عن طريق التكنولوجيا الحديثة", type: "ورشة عمل",  date: "2026-10-26", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 16, title: "البيانات الضخمة في التعليم الجامعي", type: "ندوة", date: "2026-11-02", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 17, title: "التقنيات الرقمية والإعلام المضاد في رصد والحد من ظواهر الابتزاز الإلكتروني، المخدرات، والعنف الأسري", type: "ورشة عمل", date: "2026-11-05", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 18, title: "تنظيم الجدول الدراسي و التغلب على المماطلة الاكاديمية", type: "ورشة عمل",  date: "2026-11-08", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 19, title: "التحكم بالهوية الرقمية الشخصية", type: "ندوة",  date: "2026-11-12", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 20, title: "التعليم الافتراضي وتأثيره على العلاقات الأكاديمية", type: "ندوة", date: "2026-11-16", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 21, title: "بناء الوعي الطلابي والتحصين الفكري كدرع واقٍ ضد آفتي التدخين والمخدرات ومظاهر العنف المنزلي", type: "دورة تدريبية", date: "2026-11-19", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 22, title: "الاستخدام الآمن لمواقع التواصل الاجتماعي", type: "بوستر الكتروني",  date: "2026-11-21", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 23, title: "أمان كلمات المرور والبريد الجامعي", type: "دورة تدريبية",  date: "2026-11-23", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 24, title: "البصمة الرقمية المهنية وكيفية بنائها", type: "دورة تدريبية",  date: "2026-12-03", target: "الطلبة و منسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 25, title: "الأمن الرقمي للوثائق والسجلات الأكاديمية", type: "دورة تدريبية",  date: "2026-12-07", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 26, title: "تطبيقات الذكاء الاصطناعي في تطوير المناهج", type: "دورة تدريبية",  date: "2026-12-14", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 27, title: "أثر الاستقرار الأسري والنفسي في حماية طلبة الجامعات من شبكات ترويج المخدرات والابتزاز الرقمي", type: "ندوة موسعة", date: "2026-12-15", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 28, title: "آليات كشف والاحتيال المالي والتصيد الإلكتروني", type: "ورشة عمل",  date: "2026-12-17", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 29, title: "تعليمات انظباط الطلبة ودورها في الالتزام والاحترام", type: "ندوة",  date: "2026-12-17", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 30, title: "استخدام التكنولوجيا لتبسيط الإجراءات الإدارية", type: "ورشة عمل", date: "2026-12-21", target: "منسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 31, title: "الأمن المجتمعي المستدام: معاً لبيئة جامعية خالية من التدخين ومجتمع خالٍ من العنف الأسري والمخدرات", type: "حملة توعوية",  date: "2026-12-22", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 32, title: "تأثير الادمان على الوسط الاكاديمي والمجتمعي", type: "ندوة", date: "2026-12-24", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 33, title: "الأمن الرقمي والسلامة النفسية في البيئة الجامعية", type: "حملة توعوية",  date: "2026-12-24", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 34, title: "إدارة الوقت بفاعلية أمام الشاشات", type: "ندوة",  date: "2026-12-28", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 35, title: "حقوق الملكية الفكرية في المشاريع والبحوث الطلابية", type: "ندوة",  date: "2027-01-04", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 36, title: "دور تكنولوجيا المعلومات في تعزيز الاستقرار والتنمية المستدامة", type: "ندوة",  date: "2027-01-07", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 37, title: "مخاطر الهندسة الاجتماعية (Social Engineering) وتأثيرها الأمني", type: "ندوة", date: "2027-01-11", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 38, title: "آليات الكشف الفوري والتعامل النفسي والأكاديمي مع الطلبة المعرضين لمخاطر العنف المنزلي والإدمان", type: "دورة تدريبية",  date: "2027-01-12", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 39, title: "دور القانون والتشريعات العراقية النافذة في مكافحة الاتجار بالمخدرات والحد من الجرائم الأسرية", type: "ورشة عمل مشتركة",  date: "2027-01-14", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
             { id: 40, title: "دور التدريسي في تحصين الطلبة فكرياً ضد الغزو الثقافي الرقمي", type: "ورشة عمل", dept: "قسم الامن السيبراني", date: "2027-01-18", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 41, title: "السلامة النفسية والأمن الرقمي", type: "بوستر ورقي", dept: "قسم الامن السيبراني", date: "2027-01-24", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 42, title: "تأثير المخدرات على سلوك الفرد والتصدي للأفكار الانتحارية", type: "ورشة عمل", dept: "قسم البرامجيات", date: "2027-01-25", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 43, title: "سفرة علمية الى موسسة حكومية", type: "اخرى", dept: "الاقسام العلمية", date: "2027-01-26", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 44, title: "إدارة السمعة الرقمية للجامعة ودورها في بناء الثقة المجتمعية", type: "ندوة", dept: "قسم البرامجيات", date: "2027-02-01", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 45, title: "المسؤولية القانونية والأخلاقية لاستخدام تقنية المعلومات", type: "ندوة", dept: "الوحدة القانونية", date: "2027-02-04", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 46, title: "أخلاقيات البحث العلمي في العصر الرقمي وتجنب الانتحال", type: "دورة تدريبية", dept: "قسم البرامجيات", date: "2027-02-08", target: "الطلبة وباحثين واساتذة", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 47, title: "زيارة دار الايتام", type: "اخرى", dept: "الاقسام العلمية", date: "2027-02-10", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 48, title: "تعزيز القيم الأخلاقية والتربوية في العصر الرقمي ودورها في مواجهة المخدرات، التدخين والعنف الأسري", type: "ندوة ثقافية", dept: "الأقسام العلمية", date: "2027-02-11", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 49, title: "التهديدات الرقمية الحديثة (Ransomware, DDoS) على البنية التحتية", type: "ورشة عمل", dept: "قسم الامن السيبراني", date: "2027-02-15", target: "منسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 50, title: "الصحة النفسية الشاملة: التخلص من إدمان الشاشات والتدخين والوقاية من السلوكيات العنيفة داخل الأسرة", type: "دورة تدريبية", dept: "قسم الأمن السيبراني", date: "2027-02-18", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 51, title: "التنمر الإلكتروني وآثاره النفسية على الطلبة", type: "ندوة", dept: "قسم الامن السيبراني", date: "2027-02-28", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 52, title: "هندسة العقول: كيف تؤثر الخوارزميات على الرأي العام", type: "ندوة", dept: "قسم البرامجيات", date: "2027-03-01", target: "الطلبة و منسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 53, title: "اثر النشر العلمي في المستوعبات العالمية على مسار الباحث والمؤسسة التي ينتمي لها", type: "دورة تدريبية", dept: "قسم الامن السيبراني", date: "2027-03-03", target: "الطلبة و باحثين وأساتذة", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 54, title: "الوعي بمخاطر الويب المظلم (Dark Web) على الشباب الجامعي", type: "ندوة", dept: "قسم الشبكات", date: "2027-03-04", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 55, title: "الاستخدام المفرط للتكنولوجيا وأثره النفسي", type: "ندوة", dept: "قسم الشبكات", date: "2027-03-08", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 56, title: "اقامة مناظرة علمية بين الاقسام العلمية", type: "مناظرة", dept: "الاقسام العلمية", date: "2027-03-10", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 57, title: "تمكين القيادات الطلابية في نشر ثقافة التسامح الأسري ومحاربة التدخين السلبي والمؤثرات العقلية", type: "ورشة عمل", dept: "قسم البرامجيات", date: "2027-03-11", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 58, title: "التحول الرقمي ودوره في تطوير بيئة الطالب", type: "ورشة عمل", dept: "قسم البرامجيات", date: "2027-03-15", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 59, title: "هندسة السلوك البشري: كيف يسهم الإعلام الرقمي الموجه في ترويج المخدرات وتفكيك الروابط الأسرية", type: "ندوة علمية", dept: "قسم الأمن السيبراني", date: "2027-03-18", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 60, title: "الأمن السيبراني لمنصات التعليم الإلكتروني في المؤسسات الأكاديمية", type: "ورشة عمل", dept: "قسم الامن السيبراني", date: "2027-03-22", target: "منسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 61, title: "كيف تتخلص من أدمان الهواتف الذكية", type: "دورة تدريبية", dept: "قسم الامن السيبراني", date: "2027-03-28", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 62, title: "حماية بيانات البحوث الحساسة والملكية الفكرية", type: "دورة تدريبية", dept: "قسم الامن السيبراني", date: "2027-03-29", target: "الطلبة و باحثين وأساتذة", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 63, title: "بر الوالدين هو واجب اليوم وسعادة للمستقبل", type: "ندوة", dept: "المعاون العلمي", date: "2027-03-31", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 64, title: "تكنولوجيا الأجهزة المتصلة لخدمة البيئة الجامعية", type: "ندوة", dept: "قسم الشبكات", date: "2027-04-01", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 65, title: "التحصين الفكري للشباب ضد مخاطر الفضاء الإلكتروني", type: "بوسترالكتروني", dept: "قسم الشبكات", date: "2027-04-05", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 66, title: "كشف رسائل التصيد الإلكتروني وأساليب التلاعب النفسي", type: "دورة تدريبية", dept: "قسم الامن السيبراني", date: "2027-04-07", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 67, title: "مواجهة الحملات الموجهة ضد المؤسسات باستخدام الإعلام الرقمي المضاد", type: "ورشة عمل", dept: "قسم الشبكات", date: "2027-04-12", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 68, title: "حوكمة البيانات الرقمية وأثرها في النزاهة الأكاديمية", type: "ورشة عمل", dept: "الوحدة القانونية", date: "2027-04-14", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 69, title: "اثر التدريب الصيفي باختيار المسار المهني", type: "ورشة عمل", dept: "قسم الامن السيبراني", date: "2027-04-19", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 70, title: "تاثير التكنولوجيا في التقليل من ظاهرة الانتحار وكيفية استخدامها بشكل ايجابي", type: "ورشة عمل", dept: "قسم البرامجيات", date: "2027-05-03", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" }
+            { id: 41, title: "السلامة النفسية والأمن الرقمي", type: "بوستر ورقي",  date: "2027-01-24", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 42, title: "تأثير المخدرات على سلوك الفرد والتصدي للأفكار الانتحارية", type: "ورشة عمل",  date: "2027-01-25", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 43, title: "سفرة علمية الى موسسة حكومية", type: "اخرى", date: "2027-01-26", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 44, title: "إدارة السمعة الرقمية للجامعة ودورها في بناء الثقة المجتمعية", type: "ندوة",  date: "2027-02-01", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 45, title: "المسؤولية القانونية والأخلاقية لاستخدام تقنية المعلومات", type: "ندوة",  date: "2027-02-04", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 46, title: "أخلاقيات البحث العلمي في العصر الرقمي وتجنب الانتحال", type: "دورة تدريبية", date: "2027-02-08", target: "الطلبة وباحثين واساتذة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 47, title: "زيارة دار الايتام", type: "اخرى",  date: "2027-02-10", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 48, title: "تعزيز القيم الأخلاقية والتربوية في العصر الرقمي ودورها في مواجهة المخدرات، التدخين والعنف الأسري", type: "ندوة ثقافية",  date: "2027-02-11", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 49, title: "التهديدات الرقمية الحديثة (Ransomware, DDoS) على البنية التحتية", type: "ورشة عمل",  date: "2027-02-15", target: "منسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 50, title: "الصحة النفسية الشاملة: التخلص من إدمان الشاشات والتدخين والوقاية من السلوكيات العنيفة داخل الأسرة", type: "دورة تدريبية",  date: "2027-02-18", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 51, title: "التنمر الإلكتروني وآثاره النفسية على الطلبة", type: "ندوة",  date: "2027-02-28", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 52, title: "هندسة العقول: كيف تؤثر الخوارزميات على الرأي العام", type: "ندوة", date: "2027-03-01", target: "الطلبة و منسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 53, title: "اثر النشر العلمي في المستوعبات العالمية على مسار الباحث والمؤسسة التي ينتمي لها", type: "دورة تدريبية", date: "2027-03-03", target: "الطلبة و باحثين وأساتذة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 54, title: "الوعي بمخاطر الويب المظلم (Dark Web) على الشباب الجامعي", type: "ندوة",  date: "2027-03-04", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 55, title: "الاستخدام المفرط للتكنولوجيا وأثره النفسي", type: "ندوة", date: "2027-03-08", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 56, title: "اقامة مناظرة علمية بين الاقسام العلمية", type: "مناظرة",  date: "2027-03-10", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 57, title: "تمكين القيادات الطلابية في نشر ثقافة التسامح الأسري ومحاربة التدخين السلبي والمؤثرات العقلية", type: "ورشة عمل", date: "2027-03-11", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 58, title: "التحول الرقمي ودوره في تطوير بيئة الطالب", type: "ورشة عمل",  date: "2027-03-15", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 59, title: "هندسة السلوك البشري: كيف يسهم الإعلام الرقمي الموجه في ترويج المخدرات وتفكيك الروابط الأسرية", type: "ندوة علمية",  date: "2027-03-18", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 60, title: "الأمن السيبراني لمنصات التعليم الإلكتروني في المؤسسات الأكاديمية", type: "ورشة عمل",  date: "2027-03-22", target: "منسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 61, title: "كيف تتخلص من أدمان الهواتف الذكية", type: "دورة تدريبية",  date: "2027-03-28", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 62, title: "حماية بيانات البحوث الحساسة والملكية الفكرية", type: "دورة تدريبية",  date: "2027-03-29", target: "الطلبة و باحثين وأساتذة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 63, title: "بر الوالدين هو واجب اليوم وسعادة للمستقبل", type: "ندوة",  date: "2027-03-31", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 64, title: "تكنولوجيا الأجهزة المتصلة لخدمة البيئة الجامعية", type: "ندوة", date: "2027-04-01", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 65, title: "التحصين الفكري للشباب ضد مخاطر الفضاء الإلكتروني", type: "بوسترالكتروني",date: "2027-04-05", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 66, title: "كشف رسائل التصيد الإلكتروني وأساليب التلاعب النفسي", type: "دورة تدريبية",  date: "2027-04-07", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 67, title: "مواجهة الحملات الموجهة ضد المؤسسات باستخدام الإعلام الرقمي المضاد", type: "ورشة عمل",  date: "2027-04-12", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 68, title: "حوكمة البيانات الرقمية وأثرها في النزاهة الأكاديمية", type: "ورشة عمل",  date: "2027-04-14", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 69, title: "اثر التدريب الصيفي باختيار المسار المهني", type: "ورشة عمل", date: "2027-04-19", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 70, title: "تاثير التكنولوجيا في التقليل من ظاهرة الانتحار وكيفية استخدامها بشكل ايجابي", type: "ورشة عمل",  date: "2027-05-03", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" }
         ];
 
         // Default SHA-256 Hash for password "admin2026"
@@ -479,14 +485,28 @@
             }
 
             const index = activities.findIndex(a => a.id == activityId);
-            if (index !== -1) {
-                activities[index].isBooked = true;
-                activities[index].teacher = teacherName;
-                activities[index].coTeacher = coTeacherName;
-                activities[index].date = eventDate;
+if (index !== -1) {
+    activities[index].isBooked = true;
+    activities[index].teacher = teacherName;
+    activities[index].coTeacher = coTeacherName;
+    activities[index].date = eventDate;
 
-                saveData();
-                alert(`تم تأكيد الحجز بنجاح!\nالعنوان: ${activities[index].title}\nالتاريخ: ${eventDate}`);
+    saveData();
+
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwcA3qQXhs-isEd8DFJ_8_PgxIXeQLPxCCPVyCxc6pvySCNcdVRAFM4ggwMMZG9lX1Q/exec";
+    fetch(SCRIPT_URL, {
+        method: "POST",
+        body: JSON.stringify({
+            title: activities[index].title,
+            type: activities[index].type,
+            dept: activities[index].dept,
+            date: eventDate,
+            teacher: teacherName,
+            coTeacher: coTeacherName
+        })
+    }).catch(err => console.error("Sheet sync failed:", err));
+
+    alert(`تم تأكيد الحجز بنجاح!\nالعنوان: ${activities[index].title}\nالتاريخ: ${eventDate}`);
 
                 document.getElementById('bookingForm').reset();
                 document.getElementById('activityDetailsCard').classList.add('hidden');
