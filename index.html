@@ -1,132 +1,822 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Feedback Form</title>
-<style>
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    background: #f5f5f5;
-    display: flex;
-    justify-content: center;
-    padding: 40px 20px;
-  }
-  form {
-    background: white;
-    padding: 32px;
-    border-radius: 8px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-    width: 100%;
-    max-width: 420px;
-  }
-  h1 {
-    font-size: 20px;
-    margin-bottom: 20px;
-  }
-  label {
-    display: block;
-    margin-bottom: 6px;
-    font-size: 14px;
-    font-weight: 600;
-  }
-  input, textarea {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 14px;
-    box-sizing: border-box;
-  }
-  textarea {
-    resize: vertical;
-    min-height: 100px;
-  }
-  button {
-    background: #222;
-    color: white;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 4px;
-    font-size: 15px;
-    cursor: pointer;
-    width: 100%;
-  }
-  button:hover {
-    background: #444;
-  }
-  .success-msg {
-    display: none;
-    text-align: center;
-    padding: 20px 0;
-  }
-  .success-msg h2 {
-    color: #1a7f37;
-    font-size: 22px;
-    margin-bottom: 8px;
-  }
-  .success-msg p {
-    color: #555;
-    font-size: 14px;
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdnjs.cloudflare.com https://fonts.googleapis.com https://fonts.gstatic.com; img-src 'self' data:;">
+    <title>استمارة الخطة السنوية (2026-2027) - كلية تكنولوجيا المعلومات</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Cairo -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Cairo', sans-serif; }
+    </style>
 </head>
-<body>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col justify-between" onmousemove="resetInactivityTimer()" onclick="resetInactivityTimer()" onkeydown="resetInactivityTimer()">
 
-<form id="myForm">
-  <h1>Feedback Form</h1>
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white shadow-xl sticky top-0 z-40 border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap justify-between items-center">
+            <div class="flex items-center space-x-3 space-x-reverse">
+                <div class="bg-amber-500/10 p-3 rounded-xl border border-amber-500/20 text-amber-400">
+                    <i class="fa-solid fa-shield-halved text-3xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl md:text-2xl font-bold tracking-wide">كلية تكنولوجيا المعلومات</h1>
+                    <p class="text-xs md:text-sm text-slate-300">وحدة الإرشاد النفسي والتوجيه التربوي - الخطة السنوية (2026-2027)</p>
+                </div>
+            </div>
+            <div class="mt-3 md:mt-0 flex items-center gap-2">
+                <a href="#adminSection" class="bg-amber-500 hover:bg-amber-600 text-slate-950 text-xs md:text-sm font-bold px-4 py-2 rounded-lg transition-all shadow flex items-center gap-2">
+                    <i class="fa-solid fa-lock"></i>  المدير
+                </a>
+            </div>
+        </div>
+    </header>
 
-  <label for="name">Name</label>
-  <input type="text" id="name" name="name" required>
+    <!-- Main Content -->
+    <main class="max-w-5xl mx-auto px-4 py-8 flex-grow w-full space-y-8">
 
-  <label for="email">Email</label>
-  <input type="text" id="email" name="email" required>
+        <!-- Booking Form Card -->
+        <div class="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden">
+            <div class="bg-slate-900 text-white p-6 border-b border-slate-800">
+                <h2 class="text-xl font-bold flex items-center gap-3 text-amber-400">
+                    <i class="fa-solid fa-pen-to-square"></i> استمارة حجز وإقامة نشاط أكاديمي
+                </h2>
+                <p class="text-slate-300 text-sm mt-1">عند اختيار العنوان سيتم إخفاؤه فوراً لمنع التكرار.</p>
+            </div>
 
-  <label for="message">Message</label>
-  <textarea id="message" name="message" required></textarea>
+            <form id="bookingForm" onsubmit="handleBooking(event)" class="p-6 md:p-8 space-y-6">
+                <!-- Teacher Name -->
+                <div>
+                    <label class="block text-slate-700 font-bold mb-2 text-sm md:text-base">
+                        <i class="fa-solid fa-user text-indigo-600 ml-1"></i> الاسم الثلاثي للتدريسي  <span class="text-red-500">*</span>
+                    </label>
+                    <input type="text" id="teacherName" required placeholder="أدخل اسمك الثلاثي واللقب العلمي" autocomplete="off"
+                           class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-slate-50 transition">
+                </div>
 
-  <button type="submit" id="submitBtn">Submit</button>
+                <!-- Select Activity -->
+                <div>
+                    <label class="block text-slate-700 font-bold mb-2 text-sm md:text-base">
+                        <i class="fa-solid fa-book-open text-indigo-600 ml-1"></i> اختيار عنوان النشاط المقترح <span class="text-red-500">*</span>
+                    </label>
+                    <select id="activitySelect" required onchange="updateActivityDetails()"
+                            class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-slate-50 transition">
+                        <option value="">-- اختر العنوان من القائمة المتاحة --</option>
+                    </select>
+                </div>
 
-  <div class="success-msg" id="successMsg">
-    <h2>Thank you!</h2>
-    <p>Your response has been recorded successfully.</p>
-  </div>
-</form>
+                <!-- Details Display -->
+                <div id="activityDetailsCard" class="hidden bg-indigo-50/80 border border-indigo-200 rounded-xl p-4 text-xs md:text-sm text-indigo-950 space-y-2">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <div><span class="font-bold">نوع النشاط:</span> <span id="infoType" class="text-indigo-700 font-semibold"></span></div>
+                        <div><span class="font-bold">القسم/الجهة:</span> <span id="infoDept" class="text-indigo-700 font-semibold"></span></div>
+                        <div><span class="font-bold">الجهة المستفيدة:</span> <span id="infoTarget" class="text-indigo-700 font-semibold"></span></div>
+                    </div>
+                </div>
 
-<script>
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz8jb184KAAQZCBCmuPcw8VyQep0TmRtYA_MliJyAjswegp5Cqp0saKlRG3Zc4gg9r_Zw/exec";
+                <!-- Event Date -->
+                <div>
+                    <label class="block text-slate-700 font-bold mb-2 text-sm md:text-base">
+                        <i class="fa-solid fa-calendar-days text-indigo-600 ml-1"></i> تاريخ انعقاد النشاط <span class="text-red-500">*</span>
+                    </label>
+                    <input type="date" id="eventDate" required
+                           class="w-full md:w-1/2 px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-slate-50 transition">
+                </div>
 
-  const form = document.getElementById("myForm");
-  const btn = document.getElementById("submitBtn");
-  const successMsg = document.getElementById("successMsg");
+                <!-- Co-teacher Radio -->
+                <div class="border-t border-slate-200 pt-6">
+                    <label class="block text-slate-700 font-bold mb-3 text-sm md:text-base">
+                        هل يوجد تدريسي آخر مشارك معك؟
+                    </label>
+                    <div class="flex items-center gap-6">
+                        <label class="flex items-center gap-2 cursor-pointer font-semibold text-slate-700">
+                            <input type="radio" name="hasCoTeacher" value="no" checked onchange="toggleCoTeacherInput()" class="w-4 h-4 text-indigo-600">
+                            لا (نشاط منفرد)
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer font-semibold text-slate-700">
+                            <input type="radio" name="hasCoTeacher" value="yes" onchange="toggleCoTeacherInput()" class="w-4 h-4 text-indigo-600">
+                            نعم (يوجد تدريسي مشارك)
+                        </label>
+                    </div>
+                </div>
 
-  form.addEventListener("submit", function(e) {
-    e.preventDefault();
-    btn.disabled = true;
-    btn.textContent = "Submitting...";
+                <!-- Co-teacher Input -->
+                <div id="coTeacherContainer" class="hidden bg-slate-100 p-4 rounded-xl border border-slate-200">
+                    <label class="block text-slate-700 font-bold mb-2 text-sm">
+                        <i class="fa-solid fa-user-plus text-indigo-600 ml-1"></i> الاسم الثلاثي للتدريسي المشارك <span class="text-red-500">*</span>
+                    </label>
+                    <input type="text" id="coTeacherName" placeholder="أدخل اسم التدريسي المشارك" autocomplete="off"
+                           class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white">
+                </div>
 
-    const data = {
-      name: document.getElementById("name").value,
-      email: document.getElementById("email").value,
-      message: document.getElementById("message").value
-    };
+                <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 rounded-xl shadow-lg transition duration-200 flex items-center justify-center gap-2 text-base md:text-lg">
+                    <i class="fa-solid fa-check-circle"></i> تأكيد وحفظ الحجز
+                </button>
+            </form>
+        </div>
 
-    fetch(SCRIPT_URL, {
-      method: "POST",
-      body: JSON.stringify(data)
-    })
-    .then(() => {
-      form.style.display = "none";
-      successMsg.style.display = "block";
-    })
-    .catch(() => {
-      btn.disabled = false;
-      btn.textContent = "Submit";
-      alert("Something went wrong. Please try again.");
-    });
-  });
-</script>
+        <!-- Directory Table -->
+        <div class="bg-white rounded-2xl shadow-lg border border-slate-200 p-6">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
+                <div>
+                    <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                        <i class="fa-solid fa-list-check text-indigo-600"></i> دليل أنشطة الخطة السنوية
+                    </h3>
+                    <p class="text-xs text-slate-500">استعرض حالة كافة الأنشطة والمناشدات المتاحة والمحجوزة</p>
+                </div>
+                <div class="w-full md:w-auto flex items-center gap-2">
+                    <input type="text" id="searchInput" onkeyup="filterActivities()" placeholder="بحث باسم النشاط أو القسم..." 
+                           class="w-full md:w-64 px-3 py-2 text-sm rounded-lg border border-slate-300 focus:ring-2 focus:ring-indigo-500 outline-none">
+                    <select id="statusFilter" onchange="filterActivities()" class="px-3 py-2 text-sm rounded-lg border border-slate-300 focus:ring-2 focus:ring-indigo-500 outline-none">
+                        <option value="all">كل الأنشطة</option>
+                        <option value="available">المتاحة فقط</option>
+                        <option value="booked">المحجوزة فقط</option>
+                    </select>
+                </div>
+            </div>
 
+            <div class="overflow-x-auto max-h-96">
+                <table class="w-full text-right text-xs md:text-sm border-collapse">
+                    <thead class="bg-slate-100 text-slate-700 sticky top-0">
+                        <tr>
+                            <th class="p-3 border-b">#</th>
+                            <th class="p-3 border-b">عنوان النشاط</th>
+                            <th class="p-3 border-b">النوع</th>
+                            <th class="p-3 border-b">القسم / المقر</th>
+                            <th class="p-3 border-b">التاريخ</th>
+                            <th class="p-3 border-b">الحالة</th>
+                        </tr>
+                    </thead>
+                    <tbody id="directoryTableBody" class="divide-y divide-slate-100"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Secure Admin Panel -->
+        <div id="adminSection" class="bg-slate-950 text-white rounded-2xl shadow-2xl p-6 md:p-8 border border-slate-800">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-4 mb-6">
+                <div>
+                    <h2 class="text-xl font-bold flex items-center gap-2 text-amber-400">
+                        <i class="fa-solid fa-shield-cat"></i> لوحة تحكم المدير
+                    </h2>
+                    <p class="text-slate-400 text-xs md:text-sm mt-1"> </p>
+                </div>
+                <span id="sessionStatus" class="bg-slate-800 text-slate-400 text-xs px-3 py-1 rounded-full border border-slate-700">غير مسجل</span>
+            </div>
+
+            <!-- Admin Login Box -->
+            <div id="adminLoginForm" class="max-w-md mx-auto bg-slate-900/90 p-6 rounded-2xl border border-slate-800 shadow-inner">
+                <label class="block text-sm font-bold mb-2 text-slate-300">رمز الدخول :</label>
+                <div class="flex gap-2">
+                    <input type="password" id="adminPassword" placeholder="أدخل كلمة المرور..." autocomplete="new-password"
+                           class="flex-grow px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm">
+                    <button onclick="loginAdmin()" class="bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold px-6 py-2.5 rounded-xl transition shadow">
+                        دخول
+                    </button>
+                </div>
+                <p id="loginError" class="text-red-400 text-xs mt-3 hidden flex items-center gap-1">
+                    <i class="fa-solid fa-triangle-exclamation"></i> <span id="loginErrorText">رمز الدخول غير صحيح!</span>
+                </p>
+            </div>
+
+            <!-- Authenticated Admin Control Area -->
+            <div id="adminDashboard" class="hidden space-y-6">
+                <!-- Action Controls -->
+                <div class="flex flex-wrap items-center gap-3">
+                    <button onclick="exportToCSV()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-4 py-2.5 rounded-xl text-xs md:text-sm transition flex items-center gap-2 shadow">
+                        <i class="fa-solid fa-file-excel"></i> تصدير البيانات إلى Excel (آمن)
+                    </button>
+                    <button onclick="openAddModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-4 py-2.5 rounded-xl text-xs md:text-sm transition flex items-center gap-2 shadow">
+                        <i class="fa-solid fa-plus-circle"></i> إضافة نشاط جديد للخطة
+                    </button>
+                    <button onclick="promptChangePassword()" class="bg-amber-600 hover:bg-amber-700 text-white font-bold px-4 py-2.5 rounded-xl text-xs md:text-sm transition flex items-center gap-2 shadow">
+                        <i class="fa-solid fa-key"></i> تغيير كلمة المرور
+                    </button>
+                    <button onclick="logoutAdmin()" class="bg-slate-800 hover:bg-slate-700 text-rose-400 font-bold px-4 py-2.5 rounded-xl text-xs md:text-sm transition flex items-center gap-2 border border-slate-700 mr-auto">
+                        <i class="fa-solid fa-right-from-bracket"></i> خروج
+                    </button>
+                </div>
+
+                <!-- Admin Table -->
+                <div class="bg-slate-900 rounded-xl border border-slate-800 overflow-x-auto">
+                    <table class="w-full text-right text-xs md:text-sm text-slate-300">
+                        <thead class="bg-slate-950 text-slate-200">
+                            <tr>
+                                <th class="p-3">#</th>
+                                <th class="p-3">عنوان النشاط</th>
+                                <th class="p-3">النوع/القسم</th>
+                                <th class="p-3">التاريخ</th>
+                                <th class="p-3">الحالة</th>
+                                <th class="p-3">القائم بالنشاط</th>
+                                <th class="p-3 text-center">الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminTableBody" class="divide-y divide-slate-800"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal for Admin Edit/Add -->
+    <div id="activityModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white text-slate-800 rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4 border border-slate-200">
+            <div class="flex justify-between items-center border-b pb-3">
+                <h3 id="modalTitle" class="text-lg font-bold text-indigo-900">تعديل بيانات النشاط</h3>
+                <button onclick="closeModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            
+            <form id="modalForm" onsubmit="saveActivityModal(event)" class="space-y-4 text-xs md:text-sm">
+                <input type="hidden" id="modalId">
+                <div>
+                    <label class="block font-bold mb-1">عنوان النشاط</label>
+                    <input type="text" id="modalActivityTitle" required class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-bold mb-1">نوع النشاط</label>
+                        <input type="text" id="modalType" required class="w-full px-3 py-2 border rounded-lg outline-none">
+                    </div>
+                    <div>
+                        <label class="block font-bold mb-1">القسم / المقر</label>
+                        <input type="text" id="modalDept" required class="w-full px-3 py-2 border rounded-lg outline-none">
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-bold mb-1">تاريخ الانعقاد</label>
+                        <input type="date" id="modalDate" required class="w-full px-3 py-2 border rounded-lg outline-none">
+                    </div>
+                    <div>
+                        <label class="block font-bold mb-1">الجهة المستفيدة</label>
+                        <input type="text" id="modalTarget" required class="w-full px-3 py-2 border rounded-lg outline-none">
+                    </div>
+                </div>
+                
+                <div class="border-t pt-3">
+                    <label class="block font-bold mb-1">حالة الحجز</label>
+                    <select id="modalIsBooked" onchange="toggleModalTeacherFields()" class="w-full px-3 py-2 border rounded-lg outline-none font-bold">
+                        <option value="false">متاح (غير محجوز)</option>
+                        <option value="true">محجوز</option>
+                    </select>
+                </div>
+
+                <div id="modalTeacherFields" class="space-y-3 bg-slate-50 p-3 rounded-lg border hidden">
+                    <div>
+                        <label class="block font-bold mb-1">اسم التدريسي الأول</label>
+                        <input type="text" id="modalTeacher" class="w-full px-3 py-2 border rounded-lg outline-none bg-white">
+                    </div>
+                    <div>
+                        <label class="block font-bold mb-1">اسم التدريسي المشارك (إن وجد)</label>
+                        <input type="text" id="modalCoTeacher" class="w-full px-3 py-2 border rounded-lg outline-none bg-white">
+                    </div>
+                </div>
+
+                <div class="flex justify-end gap-2 pt-2 border-t">
+                    <button type="button" onclick="closeModal()" class="px-4 py-2 rounded-lg bg-slate-200 text-slate-700 font-bold hover:bg-slate-300">إلغاء</button>
+                    <button type="submit" class="px-5 py-2 rounded-lg bg-indigo-600 text-white font-bold hover:bg-indigo-700 shadow">حفظ التغييرات</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 text-slate-500 text-center py-4 border-t border-slate-900 text-xs">
+        <p>جامعة بابل - كلية تكنولوجيا المعلومات - وحدة الإرشاد النفسي الجامعي © 2026</p>
+    </footer>
+
+    <!-- Secure Logic Javascript -->
+    <script>
+        // Default initial 70 topics list
+        const defaultActivities = [
+            { id: 1, title: "تشكيل لجنة اعضاء ارتباط بوحدة الارشاد النفسي الجامعي", type: "تشكيل لجنة", dept: "كلية تكنولوجيا المعلومات", date: "2026-09-01", target: "الأقسام العلمية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 2, title: "الأمن السيبراني والحماية من التصيد الإلكتروني", type: "ورشة", dept: "قسم الامن السيبراني", date: "2026-09-12", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 3, title: "المسؤولية القانونية والمجتمعية لطلبة الجامعة في مكافحة ترويج السموم والمؤثرات العقلية والعنف المنزلي", type: "ورشة عمل", dept: "الوحدة القانونية", date: "2026-09-17", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 4, title: "تحليل أثر شبكات التواصل الاجتماعي على الصحة النفسية", type: "ندوة", dept: "قسم الشبكات", date: "2026-09-19", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 5, title: "الذكاء الاصطناعي في خدمة الإرشاد النفسي الجامعي", type: "ندوة", dept: "قسم البرامجيات", date: "2026-09-21", target: "الطلبة و منسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 6, title: "تطبيقات الهواتف الذكية لتعزيز التفاعل الجامعي", type: "ورشة عمل", dept: "قسم البرامجيات", date: "2026-10-01", target: "منسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 7, title: "التشجيع على نشر البحوث الرصينة في المجلات المحلية والعالمية", type: "دورة تدريبية", dept: "قسم الشبكات", date: "2026-10-01", target: "الطلبة وباحثين واساتذة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 8, title: "تحليل البيانات لتعزيز جودة التعليم", type: "ورشة عمل", dept: "قسم البرامجيات", date: "2026-10-05", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 9, title: "مهارات التدخل المبكر والدعم النفسي لضحايا التفكك الأسري والانجراف نحو التدخين والمخدرات", type: "دورة تدريبية", dept: "قسم البرامجيات", date: "2026-10-08", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 10, title: "التنمر الإلكتروني وسبل الحد منه باستخدام تقنية المعلومات", type: "ندوة", dept: "قسم الشبكات", date: "2026-10-12", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 11, title: "الروابط النفسية والاجتماعية بين تعاطي المخدرات، تفاقم العنف الأسري، والأفكار الانتحارية لدى الشباب وكيفية معالجتها", type: "ندوة علمية", dept: "قسم الشبكات", date: "2026-10-15", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 12, title: "الصحة النفسية الرقمية وتأثير مواقع التواصل الاجتماعي على الطلبة", type: "ندوة", dept: "قسم الامن السيبراني", date: "2026-10-17", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 13, title: "التحقق من الأخبار المزيفة عبر الإنترنت", type: "ورشة عمل", dept: "قسم الامن السيبراني", date: "2026-10-19", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 14, title: "استراتيجيات الإرشاد الجامعي المتقدم في معالجة التلازم السلوكي بين الإدمان الرقمي والنزاعات الأسرية", type: "دورة تدريبية", dept: "وحدة الإرشاد النفسي والتوجيه التربوي", date: "2026-10-25", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 15, title: "مكافحة التدخين والمخدرات عن طريق التكنولوجيا الحديثة", type: "ورشة عمل", dept: "قسم الشبكات", date: "2026-10-26", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 16, title: "البيانات الضخمة في التعليم الجامعي", type: "ندوة", dept: "قسم البرامجيات", date: "2026-11-02", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 17, title: "التقنيات الرقمية والإعلام المضاد في رصد والحد من ظواهر الابتزاز الإلكتروني، المخدرات، والعنف الأسري", type: "ورشة عمل", dept: "قسم الأمن السيبراني", date: "2026-11-05", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 18, title: "تنظيم الجدول الدراسي و التغلب على المماطلة الاكاديمية", type: "ورشة عمل", dept: "قسم البرامجيات", date: "2026-11-08", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 19, title: "التحكم بالهوية الرقمية الشخصية", type: "ندوة", dept: "قسم الامن السيبراني", date: "2026-11-12", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 20, title: "التعليم الافتراضي وتأثيره على العلاقات الأكاديمية", type: "ندوة", dept: "قسم البرامجيات", date: "2026-11-16", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 21, title: "بناء الوعي الطلابي والتحصين الفكري كدرع واقٍ ضد آفتي التدخين والمخدرات ومظاهر العنف المنزلي", type: "دورة تدريبية", dept: "قسم الشبكات", date: "2026-11-19", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 22, title: "الاستخدام الآمن لمواقع التواصل الاجتماعي", type: "بوستر الكتروني", dept: "قسم الامن السيبراني", date: "2026-11-21", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 23, title: "أمان كلمات المرور والبريد الجامعي", type: "دورة تدريبية", dept: "قسم الشبكات", date: "2026-11-23", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 24, title: "البصمة الرقمية المهنية وكيفية بنائها", type: "دورة تدريبية", dept: "قسم البرامجيات", date: "2026-12-03", target: "الطلبة و منسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 25, title: "الأمن الرقمي للوثائق والسجلات الأكاديمية", type: "دورة تدريبية", dept: "قسم الامن السيبراني", date: "2026-12-07", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 26, title: "تطبيقات الذكاء الاصطناعي في تطوير المناهج", type: "دورة تدريبية", dept: "قسم الامن السيبراني", date: "2026-12-14", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 27, title: "أثر الاستقرار الأسري والنفسي في حماية طلبة الجامعات من شبكات ترويج المخدرات والابتزاز الرقمي", type: "ندوة موسعة", dept: "قسم البرامجيات", date: "2026-12-15", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 28, title: "آليات كشف والاحتيال المالي والتصيد الإلكتروني", type: "ورشة عمل", dept: "المعاون الاداري", date: "2026-12-17", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 29, title: "تعليمات انظباط الطلبة ودورها في الالتزام والاحترام", type: "ندوة", dept: "الوحدة القانونية", date: "2026-12-17", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 30, title: "استخدام التكنولوجيا لتبسيط الإجراءات الإدارية", type: "ورشة عمل", dept: "المعاون الاداري", date: "2026-12-21", target: "منسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 31, title: "الأمن المجتمعي المستدام: معاً لبيئة جامعية خالية من التدخين ومجتمع خالٍ من العنف الأسري والمخدرات", type: "حملة توعوية", dept: "كلية تكنولوجيا المعلومات", date: "2026-12-22", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 32, title: "تأثير الادمان على الوسط الاكاديمي والمجتمعي", type: "ندوة", dept: "قسم الامن السيبراني", date: "2026-12-24", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 33, title: "الأمن الرقمي والسلامة النفسية في البيئة الجامعية", type: "حملة توعوية", dept: "قسم الامن السيبراني", date: "2026-12-24", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 34, title: "إدارة الوقت بفاعلية أمام الشاشات", type: "ندوة", dept: "قسم الامن السيبراني", date: "2026-12-28", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 35, title: "حقوق الملكية الفكرية في المشاريع والبحوث الطلابية", type: "ندوة", dept: "الاقسام العلمية", date: "2027-01-04", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 36, title: "دور تكنولوجيا المعلومات في تعزيز الاستقرار والتنمية المستدامة", type: "ندوة", dept: "قسم الشبكات", date: "2027-01-07", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 37, title: "مخاطر الهندسة الاجتماعية (Social Engineering) وتأثيرها الأمني", type: "ندوة", dept: "قسم الامن السيبراني", date: "2027-01-11", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 38, title: "آليات الكشف الفوري والتعامل النفسي والأكاديمي مع الطلبة المعرضين لمخاطر العنف المنزلي والإدمان", type: "دورة تدريبية", dept: "وحدة الإرشاد النفسي", date: "2027-01-12", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 39, title: "دور القانون والتشريعات العراقية النافذة في مكافحة الاتجار بالمخدرات والحد من الجرائم الأسرية", type: "ورشة عمل مشتركة", dept: "الوحدة القانونية", date: "2027-01-14", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 40, title: "دور التدريسي في تحصين الطلبة فكرياً ضد الغزو الثقافي الرقمي", type: "ورشة عمل", dept: "قسم الامن السيبراني", date: "2027-01-18", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 41, title: "السلامة النفسية والأمن الرقمي", type: "بوستر ورقي", dept: "قسم الامن السيبراني", date: "2027-01-24", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 42, title: "تأثير المخدرات على سلوك الفرد والتصدي للأفكار الانتحارية", type: "ورشة عمل", dept: "قسم البرامجيات", date: "2027-01-25", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 43, title: "سفرة علمية الى موسسة حكومية", type: "اخرى", dept: "الاقسام العلمية", date: "2027-01-26", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 44, title: "إدارة السمعة الرقمية للجامعة ودورها في بناء الثقة المجتمعية", type: "ندوة", dept: "قسم البرامجيات", date: "2027-02-01", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 45, title: "المسؤولية القانونية والأخلاقية لاستخدام تقنية المعلومات", type: "ندوة", dept: "الوحدة القانونية", date: "2027-02-04", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 46, title: "أخلاقيات البحث العلمي في العصر الرقمي وتجنب الانتحال", type: "دورة تدريبية", dept: "قسم البرامجيات", date: "2027-02-08", target: "الطلبة وباحثين واساتذة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 47, title: "زيارة دار الايتام", type: "اخرى", dept: "الاقسام العلمية", date: "2027-02-10", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 48, title: "تعزيز القيم الأخلاقية والتربوية في العصر الرقمي ودورها في مواجهة المخدرات، التدخين والعنف الأسري", type: "ندوة ثقافية", dept: "الأقسام العلمية", date: "2027-02-11", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 49, title: "التهديدات الرقمية الحديثة (Ransomware, DDoS) على البنية التحتية", type: "ورشة عمل", dept: "قسم الامن السيبراني", date: "2027-02-15", target: "منسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 50, title: "الصحة النفسية الشاملة: التخلص من إدمان الشاشات والتدخين والوقاية من السلوكيات العنيفة داخل الأسرة", type: "دورة تدريبية", dept: "قسم الأمن السيبراني", date: "2027-02-18", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 51, title: "التنمر الإلكتروني وآثاره النفسية على الطلبة", type: "ندوة", dept: "قسم الامن السيبراني", date: "2027-02-28", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 52, title: "هندسة العقول: كيف تؤثر الخوارزميات على الرأي العام", type: "ندوة", dept: "قسم البرامجيات", date: "2027-03-01", target: "الطلبة و منسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 53, title: "اثر النشر العلمي في المستوعبات العالمية على مسار الباحث والمؤسسة التي ينتمي لها", type: "دورة تدريبية", dept: "قسم الامن السيبراني", date: "2027-03-03", target: "الطلبة و باحثين وأساتذة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 54, title: "الوعي بمخاطر الويب المظلم (Dark Web) على الشباب الجامعي", type: "ندوة", dept: "قسم الشبكات", date: "2027-03-04", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 55, title: "الاستخدام المفرط للتكنولوجيا وأثره النفسي", type: "ندوة", dept: "قسم الشبكات", date: "2027-03-08", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 56, title: "اقامة مناظرة علمية بين الاقسام العلمية", type: "مناظرة", dept: "الاقسام العلمية", date: "2027-03-10", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 57, title: "تمكين القيادات الطلابية في نشر ثقافة التسامح الأسري ومحاربة التدخين السلبي والمؤثرات العقلية", type: "ورشة عمل", dept: "قسم البرامجيات", date: "2027-03-11", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 58, title: "التحول الرقمي ودوره في تطوير بيئة الطالب", type: "ورشة عمل", dept: "قسم البرامجيات", date: "2027-03-15", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 59, title: "هندسة السلوك البشري: كيف يسهم الإعلام الرقمي الموجه في ترويج المخدرات وتفكيك الروابط الأسرية", type: "ندوة علمية", dept: "قسم الأمن السيبراني", date: "2027-03-18", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 60, title: "الأمن السيبراني لمنصات التعليم الإلكتروني في المؤسسات الأكاديمية", type: "ورشة عمل", dept: "قسم الامن السيبراني", date: "2027-03-22", target: "منسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 61, title: "كيف تتخلص من أدمان الهواتف الذكية", type: "دورة تدريبية", dept: "قسم الامن السيبراني", date: "2027-03-28", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 62, title: "حماية بيانات البحوث الحساسة والملكية الفكرية", type: "دورة تدريبية", dept: "قسم الامن السيبراني", date: "2027-03-29", target: "الطلبة و باحثين وأساتذة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 63, title: "بر الوالدين هو واجب اليوم وسعادة للمستقبل", type: "ندوة", dept: "المعاون العلمي", date: "2027-03-31", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 64, title: "تكنولوجيا الأجهزة المتصلة لخدمة البيئة الجامعية", type: "ندوة", dept: "قسم الشبكات", date: "2027-04-01", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 65, title: "التحصين الفكري للشباب ضد مخاطر الفضاء الإلكتروني", type: "بوسترالكتروني", dept: "قسم الشبكات", date: "2027-04-05", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 66, title: "كشف رسائل التصيد الإلكتروني وأساليب التلاعب النفسي", type: "دورة تدريبية", dept: "قسم الامن السيبراني", date: "2027-04-07", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 67, title: "مواجهة الحملات الموجهة ضد المؤسسات باستخدام الإعلام الرقمي المضاد", type: "ورشة عمل", dept: "قسم الشبكات", date: "2027-04-12", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 68, title: "حوكمة البيانات الرقمية وأثرها في النزاهة الأكاديمية", type: "ورشة عمل", dept: "الوحدة القانونية", date: "2027-04-14", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 69, title: "اثر التدريب الصيفي باختيار المسار المهني", type: "ورشة عمل", dept: "قسم الامن السيبراني", date: "2027-04-19", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 70, title: "تاثير التكنولوجيا في التقليل من ظاهرة الانتحار وكيفية استخدامها بشكل ايجابي", type: "ورشة عمل", dept: "قسم البرامجيات", date: "2027-05-03", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" }
+        ];
+
+        // Default SHA-256 Hash for password "admin2026"
+        // NO plaintext password exists in this codebase!
+        const DEFAULT_PASS_HASH = "6051fc84a7a0d74c225fb18a496b09952da5642e60723ecae543298edd7d82d6";
+
+        let activities = [];
+        let inactivityTimer;
+
+        // Security Utility: Sanitize text against XSS
+        function escapeHTML(str) {
+            if (!str) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        // Security Utility: Compute SHA-256 Hash asynchronously using Web Crypto API
+        async function sha256(message) {
+            const msgBuffer = new TextEncoder().encode(message);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        // Initialize Data
+        function loadData() {
+            const stored = localStorage.getItem('it_plan_activities_sec_v3');
+            if (stored) {
+                try {
+                    activities = JSON.parse(stored);
+                } catch(e) {
+                    activities = [...defaultActivities];
+                }
+            } else {
+                activities = [...defaultActivities];
+                saveData();
+            }
+            renderSelectOptions();
+            renderDirectoryTable();
+            checkSessionState();
+        }
+
+        function saveData() {
+            localStorage.setItem('it_plan_activities_sec_v3', JSON.stringify(activities));
+        }
+
+        // Render Dropdown options (Hide booked topics)
+        function renderSelectOptions() {
+            const select = document.getElementById('activitySelect');
+            select.innerHTML = '<option value="">-- اختر العنوان من القائمة المتاحة --</option>';
+            
+            const available = activities.filter(a => !a.isBooked);
+            available.forEach(act => {
+                const opt = document.createElement('option');
+                opt.value = act.id;
+                opt.textContent = `${act.title} (${act.dept})`;
+                select.appendChild(opt);
+            });
+        }
+
+        function updateActivityDetails() {
+            const selectVal = document.getElementById('activitySelect').value;
+            const detailsCard = document.getElementById('activityDetailsCard');
+            const dateInput = document.getElementById('eventDate');
+
+            if (!selectVal) {
+                detailsCard.classList.add('hidden');
+                return;
+            }
+
+            const act = activities.find(a => a.id == selectVal);
+            if (act) {
+                document.getElementById('infoType').textContent = act.type;
+                document.getElementById('infoDept').textContent = act.dept;
+                document.getElementById('infoTarget').textContent = act.target;
+                dateInput.value = act.date;
+                detailsCard.classList.remove('hidden');
+            }
+        }
+
+        function toggleCoTeacherInput() {
+            const hasCo = document.querySelector('input[name="hasCoTeacher"]:checked').value === 'yes';
+            const container = document.getElementById('coTeacherContainer');
+            const input = document.getElementById('coTeacherName');
+            
+            if (hasCo) {
+                container.classList.remove('hidden');
+                input.required = true;
+            } else {
+                container.classList.add('hidden');
+                input.required = false;
+                input.value = '';
+            }
+        }
+
+        // Handle Public Booking Submission
+        function handleBooking(e) {
+            e.preventDefault();
+
+            const teacherName = escapeHTML(document.getElementById('teacherName').value.trim());
+            const activityId = document.getElementById('activitySelect').value;
+            const eventDate = document.getElementById('eventDate').value;
+            const hasCo = document.querySelector('input[name="hasCoTeacher"]:checked').value === 'yes';
+            const coTeacherName = hasCo ? escapeHTML(document.getElementById('coTeacherName').value.trim()) : '';
+
+            if (!teacherName || !activityId || !eventDate) {
+                alert("يرجى ملء كافة الحقول الإلزامية!");
+                return;
+            }
+
+            const index = activities.findIndex(a => a.id == activityId);
+            if (index !== -1) {
+                activities[index].isBooked = true;
+                activities[index].teacher = teacherName;
+                activities[index].coTeacher = coTeacherName;
+                activities[index].date = eventDate;
+
+                saveData();
+                alert(`تم تأكيد الحجز بنجاح!\nالعنوان: ${activities[index].title}\nالتاريخ: ${eventDate}`);
+
+                document.getElementById('bookingForm').reset();
+                document.getElementById('activityDetailsCard').classList.add('hidden');
+                toggleCoTeacherInput();
+
+                renderSelectOptions();
+                renderDirectoryTable();
+                if (sessionStorage.getItem('admin_session') === 'active') {
+                    renderAdminTable();
+                }
+            }
+        }
+
+        // Render Directory Table with Sanitized Outputs
+        function renderDirectoryTable() {
+            const tbody = document.getElementById('directoryTableBody');
+            tbody.innerHTML = '';
+
+            activities.forEach(act => {
+                const tr = document.createElement('tr');
+                tr.className = act.isBooked ? 'bg-amber-50/60' : 'hover:bg-slate-50';
+                
+                const statusBadge = act.isBooked 
+                    ? `<span class="bg-amber-100 text-amber-900 font-bold px-2.5 py-1 rounded-full text-xs">محجوز: ${escapeHTML(act.teacher)}</span>`
+                    : `<span class="bg-emerald-100 text-emerald-800 font-bold px-2.5 py-1 rounded-full text-xs">متاح</span>`;
+
+                tr.innerHTML = `
+                    <td class="p-3 border-b text-slate-400 font-bold">${act.id}</td>
+                    <td class="p-3 border-b font-semibold text-slate-800">${escapeHTML(act.title)}</td>
+                    <td class="p-3 border-b text-slate-600">${escapeHTML(act.type)}</td>
+                    <td class="p-3 border-b text-slate-600">${escapeHTML(act.dept)}</td>
+                    <td class="p-3 border-b text-slate-600" dir="ltr">${escapeHTML(act.date)}</td>
+                    <td class="p-3 border-b">${statusBadge}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function filterActivities() {
+            const searchVal = document.getElementById('searchInput').value.toLowerCase();
+            const statusVal = document.getElementById('statusFilter').value;
+            const rows = document.getElementById('directoryTableBody').getElementsByTagName('tr');
+
+            activities.forEach((act, index) => {
+                if (!rows[index]) return;
+                
+                const matchesSearch = act.title.toLowerCase().includes(searchVal) || act.dept.toLowerCase().includes(searchVal);
+                let matchesStatus = true;
+                
+                if (statusVal === 'available') matchesStatus = !act.isBooked;
+                if (statusVal === 'booked') matchesStatus = act.isBooked;
+
+                rows[index].style.display = (matchesSearch && matchesStatus) ? '' : 'none';
+            });
+        }
+
+        // SECURE ADMIN AUTHENTICATION
+        async function loginAdmin() {
+            const passInput = document.getElementById('adminPassword').value;
+            const errorBox = document.getElementById('loginError');
+            const errorText = document.getElementById('loginErrorText');
+
+            // Anti-Brute-Force Rate Limiting Lockout Check
+            const lockUntil = localStorage.getItem('admin_lockout_until');
+            if (lockUntil && Date.now() < parseInt(lockUntil)) {
+                const remainingMins = Math.ceil((parseInt(lockUntil) - Date.now()) / 60000);
+                errorText.textContent = `تم قفل تسجيل الدخول لكثرة المحاولات! حاول مجدداً بعد ${remainingMins} دقيقة.`;
+                errorBox.classList.remove('hidden');
+                return;
+            }
+
+            if (!passInput) return;
+
+            // Compute Hash of entered password
+            const hashedAttempt = await sha256(passInput);
+            const activeHash = localStorage.getItem('admin_pass_hash') || DEFAULT_PASS_HASH;
+
+            if (hashedAttempt === activeHash) {
+                // Reset failed attempts counter
+                localStorage.removeItem('admin_failed_attempts');
+                localStorage.removeItem('admin_lockout_until');
+                
+                // Set session token in SessionStorage (wiped on tab close)
+                sessionStorage.setItem('admin_session', 'active');
+                
+                document.getElementById('adminPassword').value = '';
+                errorBox.classList.add('hidden');
+                checkSessionState();
+            } else {
+                // Handle Failed Attempt
+                let failedCount = parseInt(localStorage.getItem('admin_failed_attempts') || '0') + 1;
+                localStorage.setItem('admin_failed_attempts', failedCount);
+
+                if (failedCount >= 5) {
+                    // Lockout for 15 minutes
+                    const lockoutTime = Date.now() + (15 * 60 * 1000);
+                    localStorage.setItem('admin_lockout_until', lockoutTime);
+                    errorText.textContent = "تم تجاوز حد المحاولات المسموح! تم قفل النظام لمدة 15 دقيقة.";
+                } else {
+                    errorText.textContent = `كلمة المرور غير صحيحة! باقي لديك ${5 - failedCount} محاولات.`;
+                }
+                errorBox.classList.remove('hidden');
+            }
+        }
+
+        function checkSessionState() {
+            const isActive = sessionStorage.getItem('admin_session') === 'active';
+            const statusBadge = document.getElementById('sessionStatus');
+
+            if (isActive) {
+                document.getElementById('adminLoginForm').classList.add('hidden');
+                document.getElementById('adminDashboard').classList.remove('hidden');
+                statusBadge.textContent = 'نشط (مؤمّن)';
+                statusBadge.className = 'bg-emerald-500/20 text-emerald-400 text-xs px-3 py-1 rounded-full border border-emerald-500/30';
+                renderAdminTable();
+                resetInactivityTimer();
+            } else {
+                document.getElementById('adminLoginForm').classList.remove('hidden');
+                document.getElementById('adminDashboard').classList.add('hidden');
+                statusBadge.textContent = 'غير مسجل';
+                statusBadge.className = 'bg-slate-800 text-slate-400 text-xs px-3 py-1 rounded-full border border-slate-700';
+            }
+        }
+
+        function logoutAdmin() {
+            sessionStorage.removeItem('admin_session');
+            clearTimeout(inactivityTimer);
+            checkSessionState();
+        }
+
+        function resetInactivityTimer() {
+            if (sessionStorage.getItem('admin_session') === 'active') {
+                clearTimeout(inactivityTimer);
+                // Auto-logout after 15 minutes of inactivity
+                inactivityTimer = setTimeout(() => {
+                    alert("انتهت مدة الجلسة بسبب الخمول. تم تسجيل الخروج تلقائياً لأسباب أمنية.");
+                    logoutAdmin();
+                }, 15 * 60 * 1000);
+            }
+        }
+
+        // Change Password securely
+        async function promptChangePassword() {
+            const oldPass = prompt("أدخل كلمة المرور الحالية:");
+            if (!oldPass) return;
+
+            const hashedAttempt = await sha256(oldPass);
+            const activeHash = localStorage.getItem('admin_pass_hash') || DEFAULT_PASS_HASH;
+
+            if (hashedAttempt === activeHash) {
+                const newPass = prompt("أدخل كلمة المرور الجديدة (6 أحرف/أرقام على الأقل):");
+                if (newPass && newPass.length >= 6) {
+                    const newHash = await sha256(newPass);
+                    localStorage.setItem('admin_pass_hash', newHash);
+                    alert("تم تحديث كلمة المرور المشفرة بنجاح!");
+                } else {
+                    alert("كلمة المرور الجديدة قصيرة جداً لم يتم الحفظ.");
+                }
+            } else {
+                alert("كلمة المرور الحالية غير صحيحة!");
+            }
+        }
+
+        // Render Admin Control Table
+        function renderAdminTable() {
+            const tbody = document.getElementById('adminTableBody');
+            tbody.innerHTML = '';
+
+            activities.forEach(act => {
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-slate-800/50';
+
+                const teacherDisplay = act.isBooked 
+                    ? `${escapeHTML(act.teacher)}${act.coTeacher ? ' + ' + escapeHTML(act.coTeacher) : ''}`
+                    : '<span class="text-slate-500">غير محدد</span>';
+
+                const statusBadge = act.isBooked
+                    ? `<span class="bg-amber-500/20 text-amber-400 border border-amber-500/30 px-2 py-0.5 rounded text-xs">محجوز</span>`
+                    : `<span class="bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-2 py-0.5 rounded text-xs">متاح</span>`;
+
+                tr.innerHTML = `
+                    <td class="p-3">${act.id}</td>
+                    <td class="p-3 font-semibold text-white">${escapeHTML(act.title)}</td>
+                    <td class="p-3">${escapeHTML(act.type)} / <span class="text-amber-300">${escapeHTML(act.dept)}</span></td>
+                    <td class="p-3" dir="ltr">${escapeHTML(act.date)}</td>
+                    <td class="p-3">${statusBadge}</td>
+                    <td class="p-3">${teacherDisplay}</td>
+                    <td class="p-3 text-center space-x-1 space-x-reverse">
+                        <button onclick="openEditModal(${act.id})" title="تعديل" class="bg-blue-600/80 hover:bg-blue-600 text-white p-1.5 rounded transition">
+                            <i class="fa-solid fa-pen"></i>
+                        </button>
+                        <button onclick="deleteActivity(${act.id})" title="حذف" class="bg-red-600/80 hover:bg-red-600 text-white p-1.5 rounded transition">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Modal Controls
+        function openEditModal(id) {
+            const act = activities.find(a => a.id === id);
+            if (!act) return;
+
+            document.getElementById('modalTitle').textContent = 'تعديل بيانات النشاط';
+            document.getElementById('modalId').value = act.id;
+            document.getElementById('modalActivityTitle').value = act.title;
+            document.getElementById('modalType').value = act.type;
+            document.getElementById('modalDept').value = act.dept;
+            document.getElementById('modalDate').value = act.date;
+            document.getElementById('modalTarget').value = act.target;
+            document.getElementById('modalIsBooked').value = act.isBooked ? 'true' : 'false';
+            document.getElementById('modalTeacher').value = act.teacher || '';
+            document.getElementById('modalCoTeacher').value = act.coTeacher || '';
+
+            toggleModalTeacherFields();
+            document.getElementById('activityModal').classList.remove('hidden');
+        }
+
+        function openAddModal() {
+            document.getElementById('modalTitle').textContent = 'إضافة نشاط جديد للخطة';
+            document.getElementById('modalId').value = '';
+            document.getElementById('modalForm').reset();
+            document.getElementById('modalIsBooked').value = 'false';
+            document.getElementById('modalDate').value = '2026-10-01';
+            
+            toggleModalTeacherFields();
+            document.getElementById('activityModal').classList.remove('hidden');
+        }
+
+        function toggleModalTeacherFields() {
+            const isBooked = document.getElementById('modalIsBooked').value === 'true';
+            const container = document.getElementById('modalTeacherFields');
+            container.classList.toggle('hidden', !isBooked);
+        }
+
+        function closeModal() {
+            document.getElementById('activityModal').classList.add('hidden');
+        }
+
+        function saveActivityModal(e) {
+            e.preventDefault();
+            
+            const modalId = document.getElementById('modalId').value;
+            const isBooked = document.getElementById('modalIsBooked').value === 'true';
+
+            const activityData = {
+                title: escapeHTML(document.getElementById('modalActivityTitle').value.trim()),
+                type: escapeHTML(document.getElementById('modalType').value.trim()),
+                dept: escapeHTML(document.getElementById('modalDept').value.trim()),
+                date: document.getElementById('modalDate').value,
+                target: escapeHTML(document.getElementById('modalTarget').value.trim()),
+                isBooked: isBooked,
+                teacher: isBooked ? escapeHTML(document.getElementById('modalTeacher').value.trim()) : '',
+                coTeacher: isBooked ? escapeHTML(document.getElementById('modalCoTeacher').value.trim()) : ''
+            };
+
+            if (modalId) {
+                const index = activities.findIndex(a => a.id == modalId);
+                if (index !== -1) {
+                    activities[index] = { ...activities[index], ...activityData };
+                }
+            } else {
+                const newId = activities.length > 0 ? Math.max(...activities.map(a => a.id)) + 1 : 1;
+                activities.push({ id: newId, ...activityData });
+            }
+
+            saveData();
+            closeModal();
+            renderSelectOptions();
+            renderDirectoryTable();
+            renderAdminTable();
+            alert("تم حفظ البيانات بنجاح!");
+        }
+
+        function deleteActivity(id) {
+            if (confirm("هل أنت تأكد من إزالة هذا النشاط نهائياً؟")) {
+                activities = activities.filter(a => a.id !== id);
+                saveData();
+                renderSelectOptions();
+                renderDirectoryTable();
+                renderAdminTable();
+            }
+        }
+
+        // CSV Injection Sanitization for Excel
+        function sanitizeCSVCell(str) {
+            if (!str) return '""';
+            let sanitized = String(str).replace(/"/g, '""');
+            // If cell starts with unsafe formula triggers, prepend a single quote
+            if (/^[=+@-]\s*/.test(sanitized)) {
+                sanitized = "'" + sanitized;
+            }
+            return `"${sanitized}"`;
+        }
+
+        // Export Secure CSV
+        function exportToCSV() {
+            let csvContent = "\uFEFF"; // UTF-8 BOM
+            csvContent += "ت,عنوان النشاط,نوع النشاط,القسم / المكان,تاريخ الانعقاد,الجهة المستفيدة,حالة الحجز,التدريسي المقيم,التدريسي المشارك\n";
+
+            activities.forEach(a => {
+                const statusStr = a.isBooked ? "محجوز" : "متاح";
+                const row = [
+                    a.id,
+                    sanitizeCSVCell(a.title),
+                    sanitizeCSVCell(a.type),
+                    sanitizeCSVCell(a.dept),
+                    a.date,
+                    sanitizeCSVCell(a.target),
+                    statusStr,
+                    sanitizeCSVCell(a.teacher),
+                    sanitizeCSVCell(a.coTeacher)
+                ];
+                csvContent += row.join(",") + "\n";
+            });
+
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.setAttribute("href", url);
+            link.setAttribute("download", `الخطة_السنوية_IT_2026_${new Date().toISOString().slice(0,10)}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Initialize App on DOM Ready
+        document.addEventListener('DOMContentLoaded', loadData);
+    </script>
 </body>
 </html>
