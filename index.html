@@ -447,13 +447,14 @@ async function handleBooking(e) {
         const response = await fetch(SCRIPT_URL, {
             method: "POST",
             body: JSON.stringify({
+                id: activities[index].id,
                 title: activities[index].title,
                 type: activities[index].type,
                 dept: teacherDept,
                 date: eventDate,
                 teacher: teacherName,
-                coTeacher: coTeacherName,
-                id: activities[index].id
+                coTeacher: coTeacherName
+                
             })
         });
 
