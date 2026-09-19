@@ -523,7 +523,7 @@ async function handleBooking(e) {
             const act = activities.find(a => a.id == selectVal);
             if (act) {
                 document.getElementById('infoType').textContent = act.type;
-                document.getElementById('infoDept').textContent = act.dept;
+                document.getElementById('infoDept').textContent = document.getElementById('teacherDept').value;
                 document.getElementById('infoTarget').textContent = act.target;
                 dateInput.value = act.date;
                 detailsCard.classList.remove('hidden');
