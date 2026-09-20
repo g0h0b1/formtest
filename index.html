@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdnjs.cloudflare.com https://fonts.googleapis.com https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com;">    <title>استمارة الخطة السنوية (2026-2027) - كلية تكنولوجيا المعلومات</title>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdnjs.cloudflare.com https://fonts.googleapis.com https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com;">
+    <title>استمارة الخطة السنوية (2026-2027) - كلية تكنولوجيا المعلومات</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
@@ -28,7 +29,6 @@
                     <p class="text-xs md:text-sm text-slate-300">وحدة الإرشاد النفسي والتوجيه التربوي - الخطة السنوية (2026-2027)</p>
                 </div>
             </div>
-           
         </div>
     </header>
 
@@ -48,17 +48,27 @@
                 <!-- Teacher Name -->
                 <div>
                     <label class="block text-slate-700 font-bold mb-2 text-sm md:text-base">
-                        <i class="fa-solid fa-user text-indigo-600 ml-1"></i> الاسم الثلاثي للتدريسي  <span class="text-red-500">*</span>
+                        <i class="fa-solid fa-user text-indigo-600 ml-1"></i> الاسم الثلاثي للتدريسي <span class="text-red-500">*</span>
                     </label>
                     <input type="text" id="teacherName" required placeholder="أدخل اسمك الثلاثي واللقب العلمي" autocomplete="off"
                            class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-slate-50 transition">
                 </div>
-                 <div>
+
+                <!-- Department Select (القائمة المنسدلة للقسم) -->
+                <div>
                     <label class="block text-slate-700 font-bold mb-2 text-sm md:text-base">
-                        <i class="fa-solid fa-user text-indigo-600 ml-1"></i> القسم  <span class="text-red-500">*</span>
+                        <i class="fa-solid fa-building text-indigo-600 ml-1"></i> القسم <span class="text-red-500">*</span>
                     </label>
-                    <input type="text" id="teacherDept" required placeholder="أدخل القسم" autocomplete="off"
-                           class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-slate-50 transition">
+                    <select id="teacherDept" required onchange="updateActivityDetails()"
+                            class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-slate-50 transition">
+                        <option value="">-- اختر القسم --</option>
+                        <option value="قسم الامن السيبراني">قسم الامن السيبراني</option>
+                        <option value="قسم شبكات المعلومات">قسم شبكات المعلومات</option>
+                        <option value="قسم البرمجيات">قسم البرمجيات</option>
+                        <option value="قسم الذكاء الاصطناعي">قسم الذكاء الاصطناعي</option>
+                        <option value="قسم المعاون العلمي">قسم المعاون العلمي</option>
+                        <option value="قسم المعاون الاداري">قسم المعاون الاداري</option>
+                    </select>
                 </div>
 
                 <!-- Select Activity -->
@@ -129,10 +139,10 @@
                     <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2">
                         <i class="fa-solid fa-list-check text-indigo-600"></i> دليل أنشطة الخطة السنوية
                     </h3>
-                    <p class="text-xs text-slate-500">استعرض حالة كافة الأنشطة والمناشدات المتاحة والمحجوزة</p>
+                    <p class="text-xs text-slate-500">استعرض حالة كافة الأنشطة المتاحة والمحجوزة</p>
                 </div>
                 <div class="w-full md:w-auto flex items-center gap-2">
-                    <input type="text" id="searchInput" onkeyup="filterActivities()" placeholder="بحث باسم النشاط أو القسم..." 
+                    <input type="text" id="searchInput" onkeyup="filterActivities()" placeholder="بحث باسم النشاط..." 
                            class="w-full md:w-64 px-3 py-2 text-sm rounded-lg border border-slate-300 focus:ring-2 focus:ring-indigo-500 outline-none">
                     <select id="statusFilter" onchange="filterActivities()" class="px-3 py-2 text-sm rounded-lg border border-slate-300 focus:ring-2 focus:ring-indigo-500 outline-none">
                         <option value="all">كل الأنشطة</option>
@@ -149,7 +159,6 @@
                             <th class="p-3 border-b">#</th>
                             <th class="p-3 border-b">عنوان النشاط</th>
                             <th class="p-3 border-b">النوع</th>
-                            
                             <th class="p-3 border-b">التاريخ</th>
                             <th class="p-3 border-b">الحالة</th>
                         </tr>
@@ -161,8 +170,6 @@
 
     </main>
 
-  
-
     <!-- Footer -->
     <footer class="bg-slate-950 text-slate-500 text-center py-4 border-t border-slate-900 text-xs">
         <p>جامعة بابل - كلية تكنولوجيا المعلومات - وحدة الإرشاد النفسي الجامعي © 2026</p>
@@ -170,88 +177,82 @@
 
     <!-- Secure Logic Javascript -->
     <script>
-        // Default initial 70 topics list
         const defaultActivities = [
-            { id: 1, title: "تشكيل لجنة اعضاء ارتباط بوحدة الارشاد النفسي الجامعي", type: "تشكيل لجنة",  date: "2026-09-01", target: "الأقسام العلمية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 2, title: "الأمن السيبراني والحماية من التصيد الإلكتروني", type: "ورشة",  date: "2026-09-23", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 3, title: "المسؤولية القانونية والمجتمعية لطلبة الجامعة في مكافحة ترويج السموم والمؤثرات العقلية والعنف المنزلي", type: "ورشة عمل",  date: "2026-09-24", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 1, title: "تشكيل لجنة اعضاء ارتباط بوحدة الارشاد النفسي الجامعي", type: "تشكيل لجنة", date: "2026-09-01", target: "الأقسام العلمية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 2, title: "الأمن السيبراني والحماية من التصيد الإلكتروني", type: "ورشة", date: "2026-09-23", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 3, title: "المسؤولية القانونية والمجتمعية لطلبة الجامعة في مكافحة ترويج السموم والمؤثرات العقلية والعنف المنزلي", type: "ورشة عمل", date: "2026-09-24", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
             { id: 4, title: "تحليل أثر شبكات التواصل الاجتماعي على الصحة النفسية", type: "ندوة", date: "2026-09-27", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 5, title: "الذكاء الاصطناعي في خدمة الإرشاد النفسي الجامعي", type: "ندوة",  date: "2026-09-29", target: "الطلبة و منسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 6, title: "تطبيقات الهواتف الذكية لتعزيز التفاعل الجامعي", type: "ورشة عمل",  date: "2026-10-01", target: "منسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 5, title: "الذكاء الاصطناعي في خدمة الإرشاد النفسي الجامعي", type: "ندوة", date: "2026-09-29", target: "الطلبة و منسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 6, title: "تطبيقات الهواتف الذكية لتعزيز التفاعل الجامعي", type: "ورشة عمل", date: "2026-10-01", target: "منسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
             { id: 7, title: "التشجيع على نشر البحوث الرصينة في المجلات المحلية والعالمية", type: "دورة تدريبية", date: "2026-10-04", target: "الطلبة وباحثين واساتذة", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 8, title: "تحليل البيانات لتعزيز جودة التعليم", type: "ورشة عمل",  date: "2026-10-05", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 9, title: "مهارات التدخل المبكر والدعم النفسي لضحايا التفكك الأسري والانجراف نحو التدخين والمخدرات", type: "دورة تدريبية",  date: "2026-10-08", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 8, title: "تحليل البيانات لتعزيز جودة التعليم", type: "ورشة عمل", date: "2026-10-05", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 9, title: "مهارات التدخل المبكر والدعم النفسي لضحايا التفكك الأسري والانجراف نحو التدخين والمخدرات", type: "دورة تدريبية", date: "2026-10-08", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
             { id: 10, title: "التنمر الإلكتروني وسبل الحد منه باستخدام تقنية المعلومات", type: "ندوة", date: "2026-10-12", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 11, title: "الروابط النفسية والاجتماعية بين تعاطي المخدرات، تفاقم العنف الأسري، والأفكار الانتحارية لدى الشباب وكيفية معالجتها", type: "ندوة علمية",  date: "2026-10-15", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 11, title: "الروابط النفسية والاجتماعية بين تعاطي المخدرات، تفاقم العنف الأسري، والأفكار الانتحارية لدى الشباب وكيفية معالجتها", type: "ندوة علمية", date: "2026-10-15", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
             { id: 12, title: "الصحة النفسية الرقمية وتأثير مواقع التواصل الاجتماعي على الطلبة", type: "ندوة", date: "2026-10-17", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 13, title: "التحقق من الأخبار المزيفة عبر الإنترنت", type: "ورشة عمل",  date: "2026-10-19", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 14, title: "استراتيجيات الإرشاد الجامعي المتقدم في معالجة التلازم السلوكي بين الإدمان الرقمي والنزاعات الأسرية", type: "دورة تدريبية",  date: "2026-10-25", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 15, title: "مكافحة التدخين والمخدرات عن طريق التكنولوجيا الحديثة", type: "ورشة عمل",  date: "2026-10-26", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 13, title: "التحقق من الأخبار المزيفة عبر الإنترنت", type: "ورشة عمل", date: "2026-10-19", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 14, title: "استراتيجيات الإرشاد الجامعي المتقدم في معالجة التلازم السلوكي بين الإدمان الرقمي والنزاعات الأسرية", type: "دورة تدريبية", date: "2026-10-25", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 15, title: "مكافحة التدخين والمخدرات عن طريق التكنولوجيا الحديثة", type: "ورشة عمل", date: "2026-10-26", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
             { id: 16, title: "البيانات الضخمة في التعليم الجامعي", type: "ندوة", date: "2026-11-02", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
             { id: 17, title: "التقنيات الرقمية والإعلام المضاد في رصد والحد من ظواهر الابتزاز الإلكتروني، المخدرات، والعنف الأسري", type: "ورشة عمل", date: "2026-11-05", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 18, title: "تنظيم الجدول الدراسي و التغلب على المماطلة الاكاديمية", type: "ورشة عمل",  date: "2026-11-08", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 19, title: "التحكم بالهوية الرقمية الشخصية", type: "ندوة",  date: "2026-11-12", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 18, title: "تنظيم الجدول الدراسي و التغلب على المماطلة الاكاديمية", type: "ورشة عمل", date: "2026-11-08", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 19, title: "التحكم بالهوية الرقمية الشخصية", type: "ندوة", date: "2026-11-12", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
             { id: 20, title: "التعليم الافتراضي وتأثيره على العلاقات الأكاديمية", type: "ندوة", date: "2026-11-16", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
             { id: 21, title: "بناء الوعي الطلابي والتحصين الفكري كدرع واقٍ ضد آفتي التدخين والمخدرات ومظاهر العنف المنزلي", type: "دورة تدريبية", date: "2026-11-19", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 22, title: "الاستخدام الآمن لمواقع التواصل الاجتماعي", type: "بوستر الكتروني",  date: "2026-11-21", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 23, title: "أمان كلمات المرور والبريد الجامعي", type: "دورة تدريبية",  date: "2026-11-23", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 24, title: "البصمة الرقمية المهنية وكيفية بنائها", type: "دورة تدريبية",  date: "2026-12-03", target: "الطلبة و منسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 25, title: "الأمن الرقمي للوثائق والسجلات الأكاديمية", type: "دورة تدريبية",  date: "2026-12-07", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 26, title: "تطبيقات الذكاء الاصطناعي في تطوير المناهج", type: "دورة تدريبية",  date: "2026-12-14", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 22, title: "الاستخدام الآمن لمواقع التواصل الاجتماعي", type: "بوستر الكتروني", date: "2026-11-21", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 23, title: "أمان كلمات المرور والبريد الجامعي", type: "دورة تدريبية", date: "2026-11-23", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 24, title: "البصمة الرقمية المهنية وكيفية بنائها", type: "دورة تدريبية", date: "2026-12-03", target: "الطلبة و منسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 25, title: "الأمن الرقمي للوثائق والسجلات الأكاديمية", type: "دورة تدريبية", date: "2026-12-07", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 26, title: "تطبيقات الذكاء الاصطناعي في تطوير المناهج", type: "دورة تدريبية", date: "2026-12-14", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
             { id: 27, title: "أثر الاستقرار الأسري والنفسي في حماية طلبة الجامعات من شبكات ترويج المخدرات والابتزاز الرقمي", type: "ندوة موسعة", date: "2026-12-15", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 28, title: "آليات كشف والاحتيال المالي والتصيد الإلكتروني", type: "ورشة عمل",  date: "2026-12-17", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 29, title: "تعليمات انظباط الطلبة ودورها في الالتزام والاحترام", type: "ندوة",  date: "2026-12-17", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 28, title: "آليات كشف واحتيال المالي والتصيد الإلكتروني", type: "ورشة عمل", date: "2026-12-17", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 29, title: "تعليمات انظباط الطلبة ودورها في الالتزام والاحترام", type: "ندوة", date: "2026-12-17", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
             { id: 30, title: "استخدام التكنولوجيا لتبسيط الإجراءات الإدارية", type: "ورشة عمل", date: "2026-12-21", target: "منسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 31, title: "الأمن المجتمعي المستدام: معاً لبيئة جامعية خالية من التدخين ومجتمع خالٍ من العنف الأسري والمخدرات", type: "حملة توعوية",  date: "2026-12-22", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 31, title: "الأمن المجتمعي المستدام: معاً لبيئة جامعية خالية من التدخين ومجتمع خالٍ من العنف الأسري والمخدرات", type: "حملة توعوية", date: "2026-12-22", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
             { id: 32, title: "تأثير الادمان على الوسط الاكاديمي والمجتمعي", type: "ندوة", date: "2026-12-24", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 33, title: "الأمن الرقمي والسلامة النفسية في البيئة الجامعية", type: "حملة توعوية",  date: "2026-12-24", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 34, title: "إدارة الوقت بفاعلية أمام الشاشات", type: "ندوة",  date: "2026-12-28", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 35, title: "حقوق الملكية الفكرية في المشاريع والبحوث الطلابية", type: "ندوة",  date: "2027-01-04", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 36, title: "دور تكنولوجيا المعلومات في تعزيز الاستقرار والتنمية المستدامة", type: "ندوة",  date: "2027-01-07", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 33, title: "الأمن الرقمي والسلامة النفسية في البيئة الجامعية", type: "حملة توعوية", date: "2026-12-24", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 34, title: "إدارة الوقت بفاعلية أمام الشاشات", type: "ندوة", date: "2026-12-28", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 35, title: "حقوق الملكية الفكرية في المشاريع والبحوث الطلابية", type: "ندوة", date: "2027-01-04", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 36, title: "دور تكنولوجيا المعلومات في تعزيز الاستقرار والتنمية المستدامة", type: "ندوة", date: "2027-01-07", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
             { id: 37, title: "مخاطر الهندسة الاجتماعية (Social Engineering) وتأثيرها الأمني", type: "ندوة", date: "2027-01-11", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 38, title: "آليات الكشف الفوري والتعامل النفسي والأكاديمي مع الطلبة المعرضين لمخاطر العنف المنزلي والإدمان", type: "دورة تدريبية",  date: "2027-01-12", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 39, title: "دور القانون والتشريعات العراقية النافذة في مكافحة الاتجار بالمخدرات والحد من الجرائم الأسرية", type: "ورشة عمل مشتركة",  date: "2027-01-14", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 38, title: "آليات الكشف الفوري والتعامل النفسي والأكاديمي مع الطلبة المعرضين لمخاطر العنف المنزلي والإدمان", type: "دورة تدريبية", date: "2027-01-12", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 39, title: "دور القانون والتشريعات العراقية النافذة في مكافحة الاتجار بالمخدرات والحد من الجرائم الأسرية", type: "ورشة عمل مشتركة", date: "2027-01-14", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
             { id: 40, title: "دور التدريسي في تحصين الطلبة فكرياً ضد الغزو الثقافي الرقمي", type: "ورشة عمل", dept: "قسم الامن السيبراني", date: "2027-01-18", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 41, title: "السلامة النفسية والأمن الرقمي", type: "بوستر ورقي",  date: "2027-01-24", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 42, title: "تأثير المخدرات على سلوك الفرد والتصدي للأفكار الانتحارية", type: "ورشة عمل",  date: "2027-01-25", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 41, title: "السلامة النفسية والأمن الرقمي", type: "بوستر ورقي", date: "2027-01-24", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 42, title: "تأثير المخدرات على سلوك الفرد والتصدي للأفكار الانتحارية", type: "ورشة عمل", date: "2027-01-25", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
             { id: 43, title: "سفرة علمية الى موسسة حكومية", type: "اخرى", date: "2027-01-26", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 44, title: "إدارة السمعة الرقمية للجامعة ودورها في بناء الثقة المجتمعية", type: "ندوة",  date: "2027-02-01", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 45, title: "المسؤولية القانونية والأخلاقية لاستخدام تقنية المعلومات", type: "ندوة",  date: "2027-02-04", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 44, title: "إدارة السمعة الرقمية للجامعة ودورها في بناء الثقة المجتمعية", type: "ندوة", date: "2027-02-01", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 45, title: "المسؤولية القانونية والأخلاقية لاستخدام تقنية المعلومات", type: "ندوة", date: "2027-02-04", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
             { id: 46, title: "أخلاقيات البحث العلمي في العصر الرقمي وتجنب الانتحال", type: "دورة تدريبية", date: "2027-02-08", target: "الطلبة وباحثين واساتذة", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 47, title: "زيارة دار الايتام", type: "اخرى",  date: "2027-02-10", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 48, title: "تعزيز القيم الأخلاقية والتربوية في العصر الرقمي ودورها في مواجهة المخدرات، التدخين والعنف الأسري", type: "ندوة ثقافية",  date: "2027-02-11", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 49, title: "التهديدات الرقمية الحديثة (Ransomware, DDoS) على البنية التحتية", type: "ورشة عمل",  date: "2027-02-15", target: "منسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 50, title: "الصحة النفسية الشاملة: التخلص من إدمان الشاشات والتدخين والوقاية من السلوكيات العنيفة داخل الأسرة", type: "دورة تدريبية",  date: "2027-02-18", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 51, title: "التنمر الإلكتروني وآثاره النفسية على الطلبة", type: "ندوة",  date: "2027-02-28", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 47, title: "زيارة دار الايتام", type: "اخرى", date: "2027-02-10", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 48, title: "تعزيز القيم الأخلاقية والتربوية في العصر الرقمي ودورها في مواجهة المخدرات، التدخين والعنف الأسري", type: "ندوة ثقافية", date: "2027-02-11", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 49, title: "التهديدات الرقمية الحديثة (Ransomware, DDoS) على البنية التحتية", type: "ورشة عمل", date: "2027-02-15", target: "منسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 50, title: "الصحة النفسية الشاملة: التخلص من إدمان الشاشات والتدخين والوقاية من السلوكيات العنيفة داخل الأسرة", type: "دورة تدريبية", date: "2027-02-18", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 51, title: "التنمر الإلكتروني وآثاره النفسية على الطلبة", type: "ندوة", date: "2027-02-28", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
             { id: 52, title: "هندسة العقول: كيف تؤثر الخوارزميات على الرأي العام", type: "ندوة", date: "2027-03-01", target: "الطلبة و منسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
             { id: 53, title: "اثر النشر العلمي في المستوعبات العالمية على مسار الباحث والمؤسسة التي ينتمي لها", type: "دورة تدريبية", date: "2027-03-03", target: "الطلبة و باحثين وأساتذة", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 54, title: "الوعي بمخاطر الويب المظلم (Dark Web) على الشباب الجامعي", type: "ندوة",  date: "2027-03-04", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 54, title: "الوعي بمخاطر الويب المظلم (Dark Web) على الشباب الجامعي", type: "ندوة", date: "2027-03-04", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
             { id: 55, title: "الاستخدام المفرط للتكنولوجيا وأثره النفسي", type: "ندوة", date: "2027-03-08", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 56, title: "اقامة مناظرة علمية بين الاقسام العلمية", type: "مناظرة",  date: "2027-03-10", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 56, title: "اقامة مناظرة علمية بين الاقسام العلمية", type: "مناظرة", date: "2027-03-10", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
             { id: 57, title: "تمكين القيادات الطلابية في نشر ثقافة التسامح الأسري ومحاربة التدخين السلبي والمؤثرات العقلية", type: "ورشة عمل", date: "2027-03-11", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 58, title: "التحول الرقمي ودوره في تطوير بيئة الطالب", type: "ورشة عمل",  date: "2027-03-15", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 59, title: "هندسة السلوك البشري: كيف يسهم الإعلام الرقمي الموجه في ترويج المخدرات وتفكيك الروابط الأسرية", type: "ندوة علمية",  date: "2027-03-18", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 60, title: "الأمن السيبراني لمنصات التعليم الإلكتروني في المؤسسات الأكاديمية", type: "ورشة عمل",  date: "2027-03-22", target: "منسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 61, title: "كيف تتخلص من أدمان الهواتف الذكية", type: "دورة تدريبية",  date: "2027-03-28", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 62, title: "حماية بيانات البحوث الحساسة والملكية الفكرية", type: "دورة تدريبية",  date: "2027-03-29", target: "الطلبة و باحثين وأساتذة", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 63, title: "بر الوالدين هو واجب اليوم وسعادة للمستقبل", type: "ندوة",  date: "2027-03-31", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 58, title: "التحول الرقمي ودوره في تطوير بيئة الطالب", type: "ورشة عمل", date: "2027-03-15", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 59, title: "هندسة السلوك البشري: كيف يسهم الإعلام الرقمي الموجه في ترويج المخدرات وتفكيك الروابط الأسرية", type: "ندوة علمية", date: "2027-03-18", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 60, title: "الأمن السيبراني لمنصات التعليم الإلكتروني في المؤسسات الأكاديمية", type: "ورشة عمل", date: "2027-03-22", target: "منسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 61, title: "كيف تتخلص من أدمان الهواتف الذكية", type: "دورة تدريبية", date: "2027-03-28", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 62, title: "حماية بيانات البحوث الحساسة والملكية الفكرية", type: "دورة تدريبية", date: "2027-03-29", target: "الطلبة و باحثين وأساتذة", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 63, title: "بر الوالدين هو واجب اليوم وسعادة للمستقبل", type: "ندوة", date: "2027-03-31", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
             { id: 64, title: "تكنولوجيا الأجهزة المتصلة لخدمة البيئة الجامعية", type: "ندوة", date: "2027-04-01", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 65, title: "التحصين الفكري للشباب ضد مخاطر الفضاء الإلكتروني", type: "بوسترالكتروني",date: "2027-04-05", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 66, title: "كشف رسائل التصيد الإلكتروني وأساليب التلاعب النفسي", type: "دورة تدريبية",  date: "2027-04-07", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 67, title: "مواجهة الحملات الموجهة ضد المؤسسات باستخدام الإعلام الرقمي المضاد", type: "ورشة عمل",  date: "2027-04-12", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 68, title: "حوكمة البيانات الرقمية وأثرها في النزاهة الأكاديمية", type: "ورشة عمل",  date: "2027-04-14", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 65, title: "التحصين الفكري للشباب ضد مخاطر الفضاء الإلكتروني", type: "بوسترالكتروني", date: "2027-04-05", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 66, title: "كشف رسائل التصيد الإلكتروني وأساليب التلاعب النفسي", type: "دورة تدريبية", date: "2027-04-07", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 67, title: "مواجهة الحملات الموجهة ضد المؤسسات باستخدام الإعلام الرقمي المضاد", type: "ورشة عمل", date: "2027-04-12", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
+            { id: 68, title: "حوكمة البيانات الرقمية وأثرها في النزاهة الأكاديمية", type: "ورشة عمل", date: "2027-04-14", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" },
             { id: 69, title: "اثر التدريب الصيفي باختيار المسار المهني", type: "ورشة عمل", date: "2027-04-19", target: "الطلبة", isBooked: false, teacher: "", coTeacher: "" },
-            { id: 70, title: "تاثير التكنولوجيا في التقليل من ظاهرة الانتحار وكيفية استخدامها بشكل ايجابي", type: "ورشة عمل",  date: "2027-05-03", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" }
+            { id: 70, title: "تاثير التكنولوجيا في التقليل من ظاهرة الانتحار وكيفية استخدامها بشكل ايجابي", type: "ورشة عمل", date: "2027-05-03", target: "الطلبة ومنسوبي الكلية", isBooked: false, teacher: "", coTeacher: "" }
         ];
 
-        // Default SHA-256 Hash for password "admin2026"
-        // NO plaintext password exists in this codebase!
-        const DEFAULT_PASS_HASH = "6051fc84a7a0d74c225fb18a496b09952da5642e60723ecae543298edd7d82d6";
-
         let activities = [];
-        let inactivityTimer;
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwcA3qQXhs-isEd8DFJ_8_PgxIXeQLPxCCPVyCxc6pvySCNcdVRAFM4ggwMMZG9lX1Q/exec";
 
-        // Security Utility: Sanitize text against XSS
         function escapeHTML(str) {
             if (!str) return '';
             return String(str)
@@ -262,111 +263,93 @@
                 .replace(/'/g, '&#039;');
         }
 
-        // Security Utility: Compute SHA-256 Hash asynchronously using Web Crypto API
-        async function sha256(message) {
-            const msgBuffer = new TextEncoder().encode(message);
-            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-            const hashArray = Array.from(new Uint8Array(hashBuffer));
-            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-        }
-
-        // Initialize Data
-        
-           const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwcA3qQXhs-isEd8DFJ_8_PgxIXeQLPxCCPVyCxc6pvySCNcdVRAFM4ggwMMZG9lX1Q/exec";
         async function loadData() {
-    activities = [...defaultActivities];
-    try {
-        const res = await fetch(SCRIPT_URL, { cache: "no-store" });
-        const bookedIds = await res.json();
+            activities = [...defaultActivities];
+            try {
+                const res = await fetch(SCRIPT_URL, { cache: "no-store" });
+                const bookedIds = await res.json();
 
-        activities.forEach(act => {
-            if (bookedIds.includes(act.id) || bookedIds.includes(String(act.id)) || bookedIds.includes(Number(act.id))) {
-                act.isBooked = true;
+                activities.forEach(act => {
+                    if (bookedIds.includes(act.id) || bookedIds.includes(String(act.id)) || bookedIds.includes(Number(act.id))) {
+                        act.isBooked = true;
+                    }
+                });
+            } catch (err) {
+                console.error("فشل جلب الحجوزات من السيرفر:", err);
             }
-        });
-    } catch (err) {
-        console.error("فشل جلب الحجوزات من السيرفر:", err);
-    }
-
-    renderSelectOptions();
-    renderDirectoryTable();
-    checkSessionState();
-}
-
-async function handleBooking(e) {
-    e.preventDefault();
-
-    const submitBtn = e.target.querySelector('button[type="submit"]');
-    const teacherName = escapeHTML(document.getElementById('teacherName').value.trim());
-    const teacherDept = escapeHTML(document.getElementById('teacherDept').value.trim());
-    const activityId = document.getElementById('activitySelect').value;
-    const eventDate = document.getElementById('eventDate').value;
-    const hasCo = document.querySelector('input[name="hasCoTeacher"]:checked').value === 'yes';
-    const coTeacherName = hasCo ? escapeHTML(document.getElementById('coTeacherName').value.trim()) : '';
-
-    if (!teacherName || !activityId || !eventDate) {
-        alert("يرجى ملء كافة الحقول الإلزامية!");
-        return;
-    }
-
-    const index = activities.findIndex(a => a.id == activityId);
-    if (index === -1) return;
-
-    submitBtn.disabled = true;
-    const originalBtnText = submitBtn.innerHTML;
-    submitBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> جاري التأكد من السيرفر والحفظ...';
-
-    try {
-        const response = await fetch(SCRIPT_URL, {
-            method: "POST",
-            body: JSON.stringify({
-                id: activities[index].id,
-                title: activities[index].title,
-                type: activities[index].type,
-                dept: teacherDept,
-                date: eventDate,
-                teacher: teacherName,
-                coTeacher: coTeacherName
-                
-            })
-        });
-
-        const result = await response.json();
-
-        if (result.status === "already_booked") {
-            alert("⚠️ " + result.message);
-            await loadData();
-        } else if (result.status === "success") {
-            activities[index].isBooked = true;
-            activities[index].teacher = teacherName;
-            activities[index].coTeacher = coTeacherName;
-            activities[index].date = eventDate;
-
-            alert(`✅ تم تأكيد الحجز بنجاح!\nالعنوان: ${activities[index].title}\nالتاريخ: ${eventDate}`);
-
-            document.getElementById('bookingForm').reset();
-            document.getElementById('activityDetailsCard').classList.add('hidden');
-            toggleCoTeacherInput();
 
             renderSelectOptions();
             renderDirectoryTable();
-            if (sessionStorage.getItem('admin_session') === 'active') {
-                renderAdminTable();
-            }
-        } else {
-            alert("حدث خطأ أثناء الحفظ: " + (result.message || "يرجى المحاولة لاحقاً"));
         }
-    } catch (err) {
-        console.error("Sheet sync failed:", err);
-        alert("تعذر الاتصال بالسيرفر! يرجى التأكد من جودة الإنترنت وإعادة المحاولة.");
-    } finally {
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = originalBtnText;
-    }
-}
 
-      
-        // Render Dropdown options (Hide booked topics)
+        async function handleBooking(e) {
+            e.preventDefault();
+
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const teacherName = escapeHTML(document.getElementById('teacherName').value.trim());
+            const teacherDept = escapeHTML(document.getElementById('teacherDept').value.trim());
+            const activityId = document.getElementById('activitySelect').value;
+            const eventDate = document.getElementById('eventDate').value;
+            const hasCo = document.querySelector('input[name="hasCoTeacher"]:checked').value === 'yes';
+            const coTeacherName = hasCo ? escapeHTML(document.getElementById('coTeacherName').value.trim()) : '';
+
+            if (!teacherName || !teacherDept || !activityId || !eventDate) {
+                alert("يرجى ملء كافة الحقول الإلزامية!");
+                return;
+            }
+
+            const index = activities.findIndex(a => a.id == activityId);
+            if (index === -1) return;
+
+            submitBtn.disabled = true;
+            const originalBtnText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> جاري التأكد من السيرفر والحفظ...';
+
+            try {
+                const response = await fetch(SCRIPT_URL, {
+                    method: "POST",
+                    body: JSON.stringify({
+                        id: activities[index].id,
+                        title: activities[index].title,
+                        type: activities[index].type,
+                        dept: teacherDept,
+                        date: eventDate,
+                        teacher: teacherName,
+                        coTeacher: coTeacherName
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.status === "already_booked") {
+                    alert("⚠️ " + result.message);
+                    await loadData();
+                } else if (result.status === "success") {
+                    activities[index].isBooked = true;
+                    activities[index].teacher = teacherName;
+                    activities[index].coTeacher = coTeacherName;
+                    activities[index].date = eventDate;
+
+                    alert(`✅ تم تأكيد الحجز بنجاح!\nالعنوان: ${activities[index].title}\nالقسم: ${teacherDept}\nالتاريخ: ${eventDate}`);
+
+                    document.getElementById('bookingForm').reset();
+                    document.getElementById('activityDetailsCard').classList.add('hidden');
+                    toggleCoTeacherInput();
+
+                    renderSelectOptions();
+                    renderDirectoryTable();
+                } else {
+                    alert("حدث خطأ أثناء الحفظ: " + (result.message || "يرجى المحاولة لاحقاً"));
+                }
+            } catch (err) {
+                console.error("Sheet sync failed:", err);
+                alert("تعذر الاتصال بالسيرفر! يرجى التأكد من جودة الإنترنت وإعادة المحاولة.");
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalBtnText;
+            }
+        }
+
         function renderSelectOptions() {
             const select = document.getElementById('activitySelect');
             select.innerHTML = '<option value="">-- اختر العنوان من القائمة المتاحة --</option>';
@@ -384,6 +367,7 @@ async function handleBooking(e) {
             const selectVal = document.getElementById('activitySelect').value;
             const detailsCard = document.getElementById('activityDetailsCard');
             const dateInput = document.getElementById('eventDate');
+            const deptVal = document.getElementById('teacherDept').value;
 
             if (!selectVal) {
                 detailsCard.classList.add('hidden');
@@ -393,7 +377,7 @@ async function handleBooking(e) {
             const act = activities.find(a => a.id == selectVal);
             if (act) {
                 document.getElementById('infoType').textContent = act.type;
-                document.getElementById('infoDept').textContent = escapeHTML(document.getElementById('teacherDept').value.trim());
+                document.getElementById('infoDept').textContent = deptVal || 'لم يحدد بعد';
                 document.getElementById('infoTarget').textContent = act.target;
                 dateInput.value = act.date;
                 detailsCard.classList.remove('hidden');
@@ -415,28 +399,23 @@ async function handleBooking(e) {
             }
         }
 
-        // Handle Public Booking Submission
-        
-
-        // Render Directory Table with Sanitized Outputs
         function renderDirectoryTable() {
             const tbody = document.getElementById('directoryTableBody');
             tbody.innerHTML = '';
-
-            activities.forEach(act => {
+            
+            activities.forEach((act, index) => {
                 const tr = document.createElement('tr');
-                tr.className = act.isBooked ? 'bg-amber-50/60' : 'hover:bg-slate-50';
+                tr.className = act.isBooked ? 'bg-slate-50 text-slate-400' : 'hover:bg-slate-50';
                 
                 const statusBadge = act.isBooked 
-                    ? `<span class="bg-amber-100 text-amber-900 font-bold px-2.5 py-1 rounded-full text-xs">محجوز: ${escapeHTML(act.teacher)}</span>`
-                    : `<span class="bg-emerald-100 text-emerald-800 font-bold px-2.5 py-1 rounded-full text-xs">متاح</span>`;
-
+                    ? '<span class="px-2 py-1 rounded-full text-xs font-bold bg-red-100 text-red-700">محجوز</span>'
+                    : '<span class="px-2 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-700">متاح</span>';
+                
                 tr.innerHTML = `
-                    <td class="p-3 border-b text-slate-400 font-bold">${act.id}</td>
-                    <td class="p-3 border-b font-semibold text-slate-800">${escapeHTML(act.title)}</td>
-                    <td class="p-3 border-b text-slate-600">${escapeHTML(act.type)}</td>
-                   
-                    <td class="p-3 border-b text-slate-600" dir="ltr">${escapeHTML(act.date)}</td>
+                    <td class="p-3 border-b">${index + 1}</td>
+                    <td class="p-3 border-b font-semibold">${escapeHTML(act.title)}</td>
+                    <td class="p-3 border-b">${escapeHTML(act.type)}</td>
+                    <td class="p-3 border-b">${act.date}</td>
                     <td class="p-3 border-b">${statusBadge}</td>
                 `;
                 tbody.appendChild(tr);
@@ -445,35 +424,27 @@ async function handleBooking(e) {
 
         function filterActivities() {
             const searchVal = document.getElementById('searchInput').value.toLowerCase();
-            const statusVal = document.getElementById('statusFilter').value;
-            const rows = document.getElementById('directoryTableBody').getElementsByTagName('tr');
+            const filterVal = document.getElementById('statusFilter').value;
+            const rows = document.querySelectorAll('#directoryTableBody tr');
 
-            activities.forEach((act, index) => {
-                if (!rows[index]) return;
-                
-                const matchesSearch = act.title.toLowerCase().includes(searchVal) || act.dept.toLowerCase().includes(searchVal);
-                let matchesStatus = true;
-                
-                if (statusVal === 'available') matchesStatus = !act.isBooked;
-                if (statusVal === 'booked') matchesStatus = act.isBooked;
+            rows.forEach((row, i) => {
+                const act = activities[i];
+                if (!act) return;
 
-                rows[index].style.display = (matchesSearch && matchesStatus) ? '' : 'none';
+                const matchesSearch = act.title.toLowerCase().includes(searchVal) || act.type.toLowerCase().includes(searchVal);
+                const matchesStatus = filterVal === 'all' || 
+                                     (filterVal === 'available' && !act.isBooked) || 
+                                     (filterVal === 'booked' && act.isBooked);
+
+                row.style.display = (matchesSearch && matchesStatus) ? '' : 'none';
             });
         }
 
-       
-        function toggleModalTeacherFields() {
-            const isBooked = document.getElementById('modalIsBooked').value === 'true';
-            const container = document.getElementById('modalTeacherFields');
-            container.classList.toggle('hidden', !isBooked);
+        function resetInactivityTimer() {
+            // يمكن إضافة مؤقت الخمول هنا إذا لزم الأمر
         }
 
-        // Initialize App on DOM Ready
-        document.addEventListener('DOMContentLoaded', () => {
-    loadData();
-    setInterval(loadData, 30000);
-});
-        
+        window.onload = loadData;
     </script>
 </body>
 </html>
